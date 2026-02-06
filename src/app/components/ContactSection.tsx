@@ -143,21 +143,21 @@ export function ContactSection() {
               <p className="text-sm uppercase tracking-widest text-gray-400">Conecte-se</p>
               <div className="flex gap-6">
                 <a
-                  href="https://instagram.com"
+                  href="https://instagram.com/annadsgr"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 border border-gray-300 flex items-center justify-center hover:border-[#795558] hover:text-[#795558] transition-all duration-300"
                 >
                   <Instagram className="w-5 h-5" />
                 </a>
-                <a
+                {/* <a
                   href="https://linkedin.com"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="w-12 h-12 border border-gray-300 flex items-center justify-center hover:border-[#795558] hover:text-[#795558] transition-all duration-300"
                 >
                   <Linkedin className="w-5 h-5" />
-                </a>
+                </a> */}
                 <a
                   href="mailto:contato@designer.com"
                   className="w-12 h-12 border border-gray-300 flex items-center justify-center hover:border-[#795558] hover:text-[#795558] transition-all duration-300"

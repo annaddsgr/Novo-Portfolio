@@ -1,109 +1,92 @@
 import { motion } from 'motion/react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Sparkles, Palette, Lightbulb } from 'lucide-react';
+import { Sparkles, Palette, Lightbulb, MousePointer2 } from 'lucide-react';
 
 export function About() {
   return (
-    <section id="sobre" className="py-20 md:py-32 px-4 md:px-8 bg-white">
-      <div className="max-w-7xl mx-auto">
-        <motion.div
-           initial={{ opacity: 0, y: 30 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true, margin: "-100px" }}
-           transition={{ duration: 0.8, ease: "easeOut" }}
-           className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#795558] mb-4">
-             Muito prazer, eu sou a Anna
-          </h2>
-          <div className="w-24 h-1 bg-[#FFDAF0] mx-auto rounded-full" />
-        </motion.div>
+    <section id="sobre" className="py-24 md:py-40 px-6 md:px-12 bg-white overflow-hidden relative">
+      {/* Background Large Typography - "Watermark" style */}
+      <div className="absolute top-20 right-[-5%] text-[20rem] md:text-[40rem] font-serif text-[#795558]/5 pointer-events-none select-none leading-none">
+        A
+      </div>
 
-        <div className="grid md:grid-cols-2 gap-12 lg:gap-20 items-center">
-           {/* Image Column */}
-           <motion.div
-             initial={{ opacity: 0, scale: 0.95 }}
-             whileInView={{ opacity: 1, scale: 1 }}
-             viewport={{ once: true }}
-             transition={{ duration: 1, ease: "easeOut" }}
-             className="relative"
-           >
-            <div className="relative w-full max-w-md mx-auto">
-               <motion.div
-                 className="absolute -top-6 -right-6 w-32 h-32 bg-[#FFDAF0] rounded-full opacity-40 blur-3xl"
-                 animate={{ scale: [1, 1.1, 1], rotate: [0, 10, 0] }}
-                 transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-               />
-               <motion.div
-                 className="absolute -bottom-6 -left-6 w-40 h-40 bg-[#795558] rounded-full opacity-20 blur-3xl"
-                 animate={{ scale: [1.1, 1, 1.1], rotate: [0, -10, 0] }}
-                 transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-               />
-               
-               <div className="relative rounded-[2rem] overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-700">
-                 <ImageWithFallback
-                   src={`${import.meta.env.BASE_URL}assets/profile_anna.jpg`}
-                   alt="Anna - Designer Gráfica"
-                   className="w-full h-auto object-cover hover:scale-105 transition-transform duration-1000 ease-out"
-                 />
+      <div className="max-w-7xl mx-auto relative z-10">
+        <div className="grid lg:grid-cols-12 gap-16 items-start">
+          
+          {/* Left Column: Image - Rectangular Portait */}
+          <div className="col-span-12 lg:col-span-5 relative">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 1.2, ease: "circOut" }}
+              className="relative aspect-[3/4] w-full max-w-sm mx-auto z-20 group"
+            >
+              <div 
+                className="absolute inset-0 bg-white shadow-2xl overflow-hidden rounded-[2rem] border-8 border-white group"
+              >
+                <img
+                  src="/assets/profile_anna.jpg"
+                  alt="Anna - Designer"
+                  className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110"
+                />
+              </div>
+              
+              {/* Floating Badge */}
+              <div className="absolute -bottom-6 -right-4 bg-white/90 backdrop-blur-md px-5 py-3 rounded-2xl shadow-xl border border-white/50 text-[#795558] flex flex-col gap-1 items-start z-30">
+                <Sparkles className="w-4 h-4" />
+                <p className="text-[10px] font-black uppercase tracking-widest leading-none">Curadoria<br/>Visual</p>
+              </div>
+            </motion.div>
+          </div>
+
+          {/* Right Column: Original Story Content */}
+          <div className="col-span-12 lg:col-span-7 pt-10 lg:pt-20">
+            <motion.div
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              viewport={{ once: true }}
+              className="space-y-12"
+            >
+               <div className="space-y-6">
+                  <h2 className="text-5xl md:text-7xl font-serif text-[#795558] leading-tight">
+                    Olá, muito <span className="italic font-light">prazer</span>.
+                  </h2>
+                  <div className="space-y-6 text-gray-500 font-light leading-relaxed max-w-2xl">
+                    <p className="text-xl md:text-2xl">
+                        Sou uma designer gráfica apaixonada por criar conexões visuais significativas. 
+                        Meu trabalho vai além da estética — busco entender profundamente cada projeto 
+                        para criar soluções que realmente façam sentido.
+                    </p>
+                    <p className="text-lg">
+                        Com mais de 5 anos de experiência, tenho o privilégio de trabalhar com marcas 
+                        que valorizam autenticidade e qualidade. Acredito que bom design é aquele que 
+                        comunica com clareza e toca as pessoas.
+                    </p>
+                  </div>
                </div>
-            </div>
-           </motion.div>
 
-           {/* Content Column */}
-           <motion.div
-             initial={{ opacity: 0, x: 20 }}
-             whileInView={{ opacity: 1, x: 0 }}
-             viewport={{ once: true }}
-             transition={{ duration: 0.8, delay: 0.2 }}
-             className="space-y-8"
-           >
-             <div className="space-y-6 text-lg md:text-xl text-gray-600 font-light leading-relaxed">
-               <p>
-                 Acredito que o design tem o poder de organizar, esclarecer e tocar. Mas, acima de tudo, ele é uma responsabilidade.
-               </p>
-               <p>
-                 Meu trabalho não é inventar uma nova personalidade para você, mas sim revelar, com cuidado e técnica, o que já existe de mais autêntico.
-                 Escolho trabalhar com calma para garantir que cada decisão visual tenha um porquê.
-               </p>
-             </div>
+               {/* Bio Highlights */}
+               <div className="flex flex-wrap gap-4">
+                  {[
+                    { text: "Minimalismo Intencional", icon: Palette },
+                    { text: "Design Estratégico", icon: Lightbulb },
+                    { text: "Curadoria de Alma", icon: Sparkles },
+                    { text: "Processo Artesanal", icon: MousePointer2 }
+                  ].map((tag, i) => (
+                    <motion.div
+                      key={i}
+                      whileHover={{ scale: 1.05, y: -5 }}
+                      className="px-6 py-3 bg-[#795558]/5 border border-[#795558]/10 rounded-full flex items-center gap-3 text-[#795558] cursor-default"
+                    >
+                      <tag.icon className="w-4 h-4" />
+                      <span className="text-xs font-bold uppercase tracking-widest">{tag.text}</span>
+                    </motion.div>
+                  ))}
+               </div>
+            </motion.div>
+          </div>
 
-             <motion.div 
-               className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-4"
-               initial="hidden"
-               whileInView="visible"
-               viewport={{ once: true }}
-               variants={{
-                 hidden: { opacity: 0 },
-                 visible: {
-                   opacity: 1,
-                   transition: {
-                     staggerChildren: 0.2
-                   }
-                 }
-               }}
-             >
-               {[
-                 { icon: Sparkles, title: "Escuta Atenta", desc: "Entender antes de criar", bg: "bg-[#FFDAF0]/30" },
-                 { icon: Palette, title: "Olhar Consciente", desc: "Estética com função", bg: "bg-[#795558]/5" },
-                 { icon: Lightbulb, title: "Construção", desc: "Processo sólido", bg: "bg-[#FCF6EF]" }
-               ].map((item, i) => (
-                 <motion.div
-                   key={i}
-                   variants={{
-                     hidden: { opacity: 0, y: 20 },
-                     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
-                   }}
-                   whileHover={{ y: -5, transition: { duration: 0.3 } }}
-                   className={`${item.bg} p-6 rounded-2xl text-center group cursor-default`}
-                 >
-                   <item.icon className="w-8 h-8 mx-auto mb-4 text-[#795558] group-hover:scale-110 transition-transform duration-300" />
-                   <h3 className="font-serif font-bold text-[#795558]">{item.title}</h3>
-                   <p className="text-sm text-gray-500 mt-2 leading-snug">{item.desc}</p>
-                 </motion.div>
-               ))}
-             </motion.div>
-           </motion.div>
         </div>
       </div>
     </section>

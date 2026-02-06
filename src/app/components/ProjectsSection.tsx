@@ -1,8 +1,9 @@
-import { useState } from "react";
-import { motion } from "motion/react";
+import { useState, useRef, useEffect } from "react";
+import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from "motion/react";
 import { ImageWithFallback } from "./figma/ImageWithFallback";
 import { ProjectModal } from "./ProjectModal";
-import { ArrowUpRight, FolderOpen } from "lucide-react";
+import { ArrowUpRight, FolderOpen, Instagram, ChevronLeft, ChevronRight } from "lucide-react";
+import { ProjectFeed } from "./ProjectFeed";
 
 export interface Project {
   id: number;
@@ -20,6 +21,99 @@ export interface Project {
   layoutType?: 'grid' | 'carousel';
   deliverables?: string[];
   virtualSlideCount?: number;
+  results?: string;
+}
+
+function ProjectCard({ project, index, onSelect }: { project: Project, index: number, onSelect: (p: Project) => void }) {
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const mouseXSpring = useSpring(x);
+  const mouseYSpring = useSpring(y);
+  const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["8deg", "-8deg"]);
+  const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-8deg", "8deg"]);
+
+  const handleMouseMove = (event: React.MouseEvent<HTMLDivElement>) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const xPct = (event.clientX - rect.left) / rect.width - 0.5;
+    const yPct = (event.clientY - rect.top) / rect.height - 0.5;
+    x.set(xPct);
+    y.set(yPct);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.9 }}
+      whileInView={{ opacity: 1, scale: 1 }}
+      transition={{ duration: 0.8, ease: "circOut" }}
+      className="flex-shrink-0 w-[75vw] md:w-[50vw] lg:w-[35vw] group relative z-0"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      onClick={() => onSelect(project)}
+      style={{ perspective: 1000 }}
+    >
+      <div className="absolute -top-12 -left-3 z-10 text-9xl font-serif text-[#795558]/5 pointer-events-none select-none italic group-hover:text-[#795558]/10 transition-colors">
+         0{index + 1}
+      </div>
+
+      <motion.div 
+        style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
+        className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-video rounded-[3rem] overflow-hidden shadow-[0_30px_100px_rgba(121,85,88,0.15)] bg-white border-[8px] md:border-[12px] border-white group-hover:shadow-[0_50px_120px_rgba(121,85,88,0.25)] transition-all duration-700"
+      >
+        <ImageWithFallback
+          src={project.image}
+          alt={project.title}
+          className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
+          style={{ transform: "translateZ(30px)" }}
+        />
+        
+        <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
+           <div 
+             className="absolute bottom-0 left-0 right-0 p-8 md:p-12 translate-y-20 group-hover:translate-y-0 transition-transform duration-700"
+             style={{ transform: "translateZ(60px)" }}
+           >
+              <div className="flex justify-between items-end">
+                 <div className="text-white">
+                   <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-2">{project.category}</p>
+                   <h3 className="text-3xl md:text-4xl font-serif italic mb-4">{project.title}</h3>
+                 </div>
+              </div>
+           </div>
+        </div>
+
+        <motion.div 
+          initial={{ opacity: 0, scale: 0 }}
+          whileHover={{ opacity: 1, scale: 1, rotate: 15 }}
+          className="absolute bottom-1/4 left-10 z-20 pointer-events-none bg-[#FFDAF0] text-[#795558] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl border border-white"
+          style={{ transform: "translateZ(100px)" }}
+        >
+           Visual Strategy
+        </motion.div>
+
+        <div className="absolute top-8 right-8 z-10" style={{ transform: "translateZ(50px)" }}>
+           <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FCF6EF]/90 backdrop-blur-md rounded-full flex flex-col items-center justify-center border border-white/50 shadow-lg group-hover:rotate-12 transition-transform duration-500">
+              <span className="text-[10px] font-black text-[#795558] mb-0.5">{project.year}</span>
+              <div className="w-4 h-[1px] bg-[#795558]/30" />
+              <span className="text-[8px] font-bold text-[#795558]/40 uppercase tracking-tighter">Edition</span>
+           </div>
+        </div>
+      </motion.div>
+
+      <div className="mt-8 flex justify-between items-start px-2 md:px-3 group-hover:translate-y-[-4px] transition-transform duration-500">
+         <div className="space-y-1">
+            <h4 className="text-xl md:text-2xl font-serif text-[#795558] group-hover:italic transition-all">{project.title}</h4>
+            <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-widest">{project.category}</p>
+         </div>
+         <button className="text-[10px] font-black uppercase tracking-widest text-[#795558] pb-1 border-b-2 border-[#795558]/10 hover:border-[#795558] transition-all">
+            Projeto Completo
+         </button>
+      </div>
+    </motion.div>
+  );
 }
 
 const projects: Project[] = [
@@ -57,7 +151,8 @@ const projects: Project[] = [
       `${import.meta.env.BASE_URL}assets/alegria_doce_2.png`,
       `${import.meta.env.BASE_URL}assets/alegria_doce_main.png`
     ],
-    layoutType: 'grid'
+    layoutType: 'grid',
+    results: "A marca Alegria Doce percebeu um aumento na percepção de valor dos produtos, permitindo um reajuste de preço de 15% e maior fidelização visual dos clientes."
   },
   {
     id: 2,
@@ -94,7 +189,8 @@ const projects: Project[] = [
       `${import.meta.env.BASE_URL}assets/recanto_flyer.jpg`,
       `${import.meta.env.BASE_URL}assets/recanto_logo_green.png`,
     ],
-    layoutType: 'grid'
+    layoutType: 'grid',
+    results: "A nova identidade atraiu um público que busca experiências de luxo silencioso, aumentando as reservas diretas pelo site em 25% no primeiro semestre."
   },
   {
     id: 3,
@@ -131,97 +227,134 @@ const projects: Project[] = [
       `${import.meta.env.BASE_URL}assets/supermercado_macarrao.png`,
       `${import.meta.env.BASE_URL}assets/supermercado_entrega.png`,
     ],
-    layoutType: 'carousel'
+    layoutType: 'carousel',
+    results: "Agilidade total: Redução de 40% no tempo de criação de posts diários e aumento de 30% no engajamento por conta da clareza visual das ofertas."
   },
 
 ];
 
 export function ProjectsSection() {
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [activeCategory, setActiveCategory] = useState("Todos");
+  const [isFeedOpen, setIsFeedOpen] = useState(false);
+  const sliderRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
+  const scrollX = useMotionValue(0);
+  
+  const progress = useTransform(scrollX, [dragConstraints.left, 0], [1, 0]);
+  const progressSpring = useSpring(progress, { stiffness: 100, damping: 30 });
+
+  const categories = ["Todos", ...new Set(projects.map((p) => p.category))];
+  const filteredProjects = activeCategory === "Todos"
+    ? projects
+    : projects.filter((p) => p.category === activeCategory);
+
+  useEffect(() => {
+    const updateConstraints = () => {
+      if (sliderRef.current && containerRef.current) {
+        const sliderWidth = sliderRef.current.scrollWidth;
+        const containerWidth = containerRef.current.offsetWidth;
+        const minScroll = Math.min(0, -(sliderWidth - containerWidth + 48));
+        setDragConstraints({ left: minScroll, right: 0 });
+      }
+    };
+
+    updateConstraints();
+    window.addEventListener('resize', updateConstraints);
+    return () => window.removeEventListener('resize', updateConstraints);
+  }, [filteredProjects, activeCategory]);
+
+  const slide = (direction: 'next' | 'prev') => {
+    if (!sliderRef.current) return;
+    const cardWidth = window.innerWidth * 0.3;
+    const currentX = scrollX.get();
+    const targetX = direction === 'next' ? currentX - cardWidth : currentX + cardWidth;
+    const clampedX = Math.min(0, Math.max(dragConstraints.left, targetX));
+    scrollX.set(clampedX);
+  };
 
   return (
-    <section
-      id="projetos"
-      className="py-24 md:py-32 px-6 md:px-12 bg-[#FCF6EF]"
-    >
-      <div className="max-w-7xl mx-auto">
-        {/* Section Header */}
+    <section id="projetos" className="py-24 md:py-40 bg-[#FCF6EF] overflow-hidden flex flex-col items-center">
+      {/* Header Container - Always Centered */}
+      <div className="w-full max-w-7xl px-6 md:px-12">
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="mb-16 text-center"
+            className="mb-20 text-center"
           >
             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#795558]/5 mb-6">
               <FolderOpen className="w-4 h-4 text-[#795558]" />
-              <span className="text-sm uppercase tracking-widest text-[#795558] font-medium">
-                Portfolio Selecionado
-              </span>
+              <span className="text-xs uppercase tracking-[0.3em] text-[#795558] font-bold">Portfolio Selecionado</span>
             </div>
             
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#795558] leading-tight mb-6">
-              Histórias que ajudei a criar
+            <h2 className="text-5xl md:text-7xl font-serif text-[#795558] leading-tight mb-10">
+              Meus <span className="italic font-light">Destaques</span>
             </h2>
-            <p className="text-lg text-gray-600 font-light max-w-2xl mx-auto">
-              Cada projeto é uma jornada única. Aqui, compartilho não apenas o resultado, 
-              mas o sentimento e o aprendizado de cada caminho percorrido.
-            </p>
+            
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+              <div className="flex flex-wrap justify-center gap-2">
+                {categories.map((category) => (
+                  <button
+                    key={category}
+                    onClick={() => {
+                        setActiveCategory(category);
+                        scrollX.set(0);
+                    }}
+                    className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
+                      activeCategory === category ? "bg-[#795558] text-white shadow-xl scale-105" : "bg-white text-[#795558] border border-[#795558]/10 hover:border-[#795558]"
+                    }`}
+                  >
+                    {category}
+                  </button>
+                ))}
+              </div>
+              <button
+                onClick={() => setIsFeedOpen(true)}
+                className="flex items-center gap-3 px-8 py-3 rounded-full bg-white text-[#795558] text-[10px] font-black uppercase tracking-widest shadow-md hover:shadow-xl transition-all border border-[#795558]/5"
+              >
+                <FolderOpen className="w-4 h-4" /> Ver Galeria Completa
+              </button>
+            </div>
           </motion.div>
-
-        {/* Behance-style Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 lg:gap-10">
-          {projects.map((project, index) => (
-            <motion.div
-              key={project.id}
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-50px" }}
-              transition={{ duration: 0.6, delay: index * 0.1 }}
-              className="group cursor-pointer flex flex-col gap-4"
-              onClick={() => setSelectedProject(project)}
-            >
-              {/* Image Container */}
-              <div className="relative aspect-[4/5] rounded-xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-500 bg-white">
-                <ImageWithFallback
-                  src={project.image}
-                  alt={project.title}
-                  className={`w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 ${project.virtualSlideCount ? 'object-left' : 'object-center'}`}
-                />
-
-                {/* Overlay on Hover */}
-                <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-between p-6">
-                  <span className="text-white text-sm font-medium px-3 py-1 bg-white/20 backdrop-blur-md rounded-full border border-white/30">
-                    Ver Projeto
-                  </span>
-                  <div className="bg-white p-2 rounded-full text-[#795558]">
-                    <ArrowUpRight className="w-4 h-4" />
-                  </div>
-                </div>
-              </div>
-
-              {/* Text Content Below */}
-              <div className="space-y-1">
-                <div className="flex justify-between items-start">
-                  <h3 className="text-xl font-serif text-[#795558] font-medium group-hover:text-[#5A3D3F] transition-colors leading-tight">
-                    {project.title}
-                  </h3>
-                </div>
-                <div className="flex items-center gap-2 text-sm text-gray-500 font-medium tracking-wide">
-                  <span className="uppercase text-xs">{project.category}</span>
-                  <span className="w-1 h-1 rounded-full bg-gray-300" />
-                  <span className="text-xs">{project.year}</span>
-                </div>
-              </div>
-            </motion.div>
-          ))}
-        </div>
       </div>
 
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => setSelectedProject(null)}
-      />
+      {/* Gallery Container - Full Width Center */}
+      <div ref={containerRef} className="w-full relative group/gallery flex flex-col items-center">
+        <motion.div 
+          ref={sliderRef}
+          drag={dragConstraints.left < 0 ? "x" : false}
+          dragConstraints={dragConstraints}
+          dragElastic={0.1}
+          dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+          style={{ x: scrollX }}
+          className={`flex gap-8 md:gap-14 pb-16 px-6 ${dragConstraints.left >= 0 ? 'justify-center' : 'cursor-grab active:cursor-grabbing'}`}
+        >
+          <AnimatePresence mode="popLayout">
+            {filteredProjects.slice(0, 2).map((project, index) => (
+              <ProjectCard key={project.id} project={project} index={index} onSelect={setSelectedProject} />
+            ))}
+          </AnimatePresence>
+        </motion.div>
+        
+        {/* Enhanced Progress Bar - Only if needed */}
+        {dragConstraints.left < 0 && (
+          <div className="mt-4 max-w-2xl w-full px-12 flex items-center gap-8 justify-center">
+             <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">01</span>
+             <div className="flex-1 max-w-xs h-[2px] bg-[#795558]/10 relative rounded-full overflow-hidden">
+                <motion.div 
+                   className="absolute left-0 top-0 bottom-0 bg-[#795558] origin-left w-full"
+                   style={{ scaleX: progressSpring }}
+                />
+             </div>
+             <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">02</span>
+          </div>
+        )}
+      </div>
+
+      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectFeed isOpen={isFeedOpen} onClose={() => setIsFeedOpen(false)} projects={projects} onSelectProject={(p) => { setSelectedProject(p); setIsFeedOpen(false); }} />
     </section>
   );
 }

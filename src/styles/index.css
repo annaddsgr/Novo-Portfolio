@@ -2,15 +2,42 @@
 @import "./tailwind.css";
 @import "./theme.css";
 
-/* Accessibility High Contrast Mode */
-html.high-contrast {
-  filter: contrast(120%) invert(100%);
-  background-color: #1a1a1a;
+/* Textura de Grão (Grainy Texture) - Efeito de papel premium */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 9999;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3%3Ffilter id='noiseFilter'%3E%3FfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
-html.high-contrast img,
-html.high-contrast video,
-html.high-contrast .no-invert,
-html.high-contrast .vlibras-widget {
-  filter: invert(100%);
+/* Custom selection color */
+::selection {
+  background-color: #795558;
+  color: #FCF6EF;
+}
+
+/* Suavização de renderização de fontes */
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #FCF6EF;
+}
+
+/* Accessibility High Contrast Mode */
+html.high-contrast {
+  filter: contrast(125%) brightness(105%);
+}
+
+html.high-contrast body {
+  background-color: #ffffff;
+}
+
+html.high-contrast .no-invert {
+  filter: none;
 }

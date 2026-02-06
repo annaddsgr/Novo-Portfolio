@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Instagram, Linkedin, Mail, Send, CheckCircle, ArrowRight } from 'lucide-react';
+import { Instagram, Mail, Send, CheckCircle, Sparkles, MessageCircle, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function Contact() {
@@ -11,24 +11,23 @@ export function Contact() {
   });
   const [submitted, setSubmitted] = useState(false);
 
-
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
+    // Configura o número e a mensagem do WhatsApp
     const phoneNumber = "5531992781019";
-    const text = `Olá Anna! Me chamo *${formData.name}*.\n\n${formData.message}\n\n(Meu email para contato é: ${formData.email})`;
+    const text = `Olá Anna! ✨\n\nMe chamo *${formData.name}*.\n\n${formData.message}\n\n(Meu email para contato é: ${formData.email})`;
     
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
     
-    toast.success('Redirecionando para o WhatsApp...');
+    toast.success('Iniciando conversa no WhatsApp...');
     
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       setSubmitted(true);
       setFormData({ name: '', email: '', message: '' });
-      
       setTimeout(() => setSubmitted(false), 3000);
-    }, 1000);
+    }, 1500);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -38,189 +37,159 @@ export function Contact() {
     });
   };
 
-  const socialLinks = [
-    {
-      icon: Instagram,
-      label: "Instagram",
-      url: "https://www.instagram.com/annadsgr?igsh=ZzRleWVic3luc2gw&utm_source=qr",
-      color: "bg-[#FFDAF0]",
-      hoverColor: "text-[#795558]"
-    },
-    {
-      icon: Mail,
-      label: "Email",
-      url: "mailto:contato@designer.com",
-      color: "bg-[#FCF6EF]",
-      hoverColor: "text-[#795558]"
-    }
-  ];
-
   return (
-    <section id="contato" className="py-24 md:py-32 px-6 md:px-12 bg-white relative overflow-hidden">
-      {/* Background Elements */}
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.img 
-            src={`${import.meta.env.BASE_URL}assets/organic_shape_wave.png`}
-            alt=""
-            className="absolute bottom-0 left-[-10%] w-[50%] opacity-20 rotate-12"
-            animate={{ rotate: [12, 10, 15, 12], y: [0, 20, 0] }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-        />
-      </div>
+    <section id="contato" className="py-20 md:py-32 px-6 md:px-12 bg-gradient-to-b from-white to-[#FCF6EF]">
+      {/* Decorative Background */}
+      <div className="max-w-7xl mx-auto relative">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FFDAF0]/30 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-80 h-80 bg-[#795558]/5 rounded-full blur-[100px] translate-y-1/2 -translate-x-1/2 pointer-events-none" />
 
-      <div className="max-w-6xl mx-auto relative z-10">
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-20"
-        >
-          <h2 className="text-4xl md:text-5xl lg:text-6xl font-serif text-[#795558] mb-6">
-            Vamos conversar?
-          </h2>
-          <p className="text-lg md:text-xl text-gray-500 font-light max-w-2xl mx-auto leading-relaxed">
-            Se fizer sentido pra você, a gente pode trocar uma ideia. Sem compromisso, apenas para ouvir sua história e ver se podemos caminhar juntos.
-          </p>
-        </motion.div>
-
-        <div className="grid md:grid-cols-2 gap-16 lg:gap-24 items-start">
-          {/* Contact Form */}
+        {/* Section Header */}
+        <div className="text-center mb-20 relative z-10">
           <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.2 }}
+            className="inline-flex items-center gap-2 mb-6"
           >
-            <form onSubmit={handleSubmit} className="space-y-8">
-              <div className="group">
-                <label htmlFor="name" className="block text-[#795558] font-medium mb-3 pl-1 text-sm tracking-wide opacity-80 group-focus-within:opacity-100 transition-opacity">
-                  Seu nome
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  value={formData.name}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-6 py-4 rounded-xl bg-white border border-[#E8DCCA] focus:border-[#FFDAF0] focus:shadow-[0_4px_20px_-10px_rgba(121,85,88,0.1)] outline-none transition-all duration-300 placeholder-gray-400 font-light"
-                  placeholder="Como prefere ser chamado?"
-                />
+            {/* <Sparkles className="w-4 h-4 text-[#795558]" /> */}
+            {/* <span className="text-[10px] uppercase tracking-[0.4em] text-[#795558] font-bold">Contato</span> */}
+          </motion.div>
+          
+          <motion.h2
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-4xl md:text-6xl font-serif text-[#795558] mb-6 font-light"
+          >
+            Vamos criar algo <span className="italic">único</span>?
+          </motion.h2>
+          
+          <motion.p 
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-gray-400 font-light max-w-lg mx-auto"
+          >
+            Me conte sobre sua história. Prometo ler cada palavra com carinho e responder o mais breve possível.
+          </motion.p>
+        </div>
+
+        {/* The Card */}
+        <div className="bg-white rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(121,85,88,0.1)] overflow-hidden flex flex-col lg:flex-row relative z-10 border border-[#795558]/5">
+          
+          {/* Left: Contact Info & Vibe */}
+          <div className="lg:w-[40%] bg-[#795558] text-[#FCF6EF] p-12 md:p-16 flex flex-col justify-between relative overflow-hidden">
+             {/* Abstract Texture */}
+             <div className="absolute inset-0 opacity-10">
+                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+             </div>
+
+             <div className="relative z-10">
+               <h3 className="text-2xl font-serif mb-2 italic">Anna Designer</h3>
+               <p className="text-[#FCF6EF]/60 text-sm font-light uppercase tracking-widest">Belo Horizonte - Brasil</p>
+             </div>
+
+             <div className="relative z-10 space-y-8 my-12">
+               <a href="mailto:contato@annadesigner.com" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
+                   <Mail className="w-5 h-5" />
+                 </div>
+                 <div>
+                   <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Email</p>
+                   <p className="font-serif text-lg">contato@anna.com.br</p>
+                 </div>
+               </a>
+
+               <a href="https://instagram.com/annadsgr" target="_blank" rel="noreferrer" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
+                   <Instagram className="w-5 h-5" />
+                 </div>
+                 <div>
+                    <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Instagram</p>
+                    <p className="font-serif text-lg">@annadsgr</p>
+                 </div>
+               </a>
+             </div>
+
+             <div className="relative z-10 pt-8 border-t border-white/10">
+                <p className="text-sm font-light opacity-60 leading-relaxed italic">
+                  "O design é a linguagem silenciosa que conecta marcas a corações."
+                </p>
+             </div>
+          </div>
+
+          {/* Right: The Letter Form */}
+          <div className="lg:w-[60%] p-12 md:p-16">
+            <form onSubmit={handleSubmit} className="space-y-10">
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label htmlFor="name" className="text-xs font-black uppercase tracking-widest text-[#795558]/50 ml-1">Seu Nome</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    placeholder="Como te chamam?"
+                    className="w-full bg-[#FCF6EF]/30 border-b border-[#795558]/10 px-4 py-4 text-[#795558] placeholder-[#795558]/30 focus:outline-none focus:border-[#795558] transition-colors rounded-t-lg hover:bg-[#FCF6EF]/50"
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label htmlFor="email" className="text-xs font-black uppercase tracking-widest text-[#795558]/50 ml-1">Seu Email</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    placeholder="Para contato"
+                    className="w-full bg-[#FCF6EF]/30 border-b border-[#795558]/10 px-4 py-4 text-[#795558] placeholder-[#795558]/30 focus:outline-none focus:border-[#795558] transition-colors rounded-t-lg hover:bg-[#FCF6EF]/50"
+                  />
+                </div>
               </div>
 
-              <div className="group">
-                <label htmlFor="email" className="block text-[#795558] font-medium mb-3 pl-1 text-sm tracking-wide opacity-80 group-focus-within:opacity-100 transition-opacity">
-                  Seu melhor email
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  required
-                  className="w-full px-6 py-4 rounded-xl bg-white border border-[#E8DCCA] focus:border-[#FFDAF0] focus:shadow-[0_4px_20px_-10px_rgba(121,85,88,0.1)] outline-none transition-all duration-300 placeholder-gray-400 font-light"
-                  placeholder="Pra gente manter contato"
-                />
-              </div>
-
-              <div className="group">
-                <label htmlFor="message" className="block text-[#795558] font-medium mb-3 pl-1 text-sm tracking-wide opacity-80 group-focus-within:opacity-100 transition-opacity">
-                  O que você tem em mente?
-                </label>
+              <div className="space-y-2">
+                <label htmlFor="message" className="text-xs font-black uppercase tracking-widest text-[#795558]/50 ml-1">Sua Mensagem</label>
                 <textarea
                   id="message"
                   name="message"
                   value={formData.message}
                   onChange={handleChange}
                   required
-                  rows={6}
-                  className="w-full px-6 py-4 rounded-xl bg-white border border-[#E8DCCA] focus:border-[#FFDAF0] focus:shadow-[0_4px_20px_-10px_rgba(121,85,88,0.1)] outline-none transition-all duration-300 resize-none placeholder-gray-400 font-light"
-                  placeholder="Pode ser apenas uma ideia inical..."
+                  rows={4}
+                  placeholder="Conte um pouco sobre sua ideia..."
+                  className="w-full bg-[#FCF6EF]/30 border-b border-[#795558]/10 px-4 py-4 text-[#795558] placeholder-[#795558]/30 focus:outline-none focus:border-[#795558] transition-colors resize-none rounded-t-lg hover:bg-[#FCF6EF]/50"
                 />
               </div>
 
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.01, boxShadow: "0 10px 30px -10px rgba(121, 85, 88, 0.3)" }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full bg-[#795558] text-white py-5 rounded-xl font-serif text-lg tracking-wide hover:bg-[#8A6B6D] transition-all duration-300 flex items-center justify-center gap-3 shadow-lg shadow-[#795558]/10"
-                disabled={submitted}
-              >
-                {submitted ? (
-                  <>
-                    <CheckCircle className="w-5 h-5" />
-                    <span className="font-light">Obrigado pelo contato!</span>
-                  </>
-                ) : (
-                  <>
-                    <Send className="w-4 h-4" />
-                    <span className="font-light">Iniciar conversa</span>
-                  </>
-                )}
-              </motion.button>
+              <div className="flex items-center justify-between pt-4">
+                 <div className="flex items-center gap-2 text-[#795558]/40 text-xs font-bold uppercase tracking-widest">
+                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                    Agenda 2024 Aberta
+                 </div>
+
+                 <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  disabled={submitted}
+                  className="bg-[#795558] text-white pl-8 pr-2 py-2 rounded-full flex items-center gap-4 hover:bg-[#5A3D3F] transition-all shadow-lg hover:shadow-xl hover:shadow-[#795558]/20 group"
+                >
+                  <span className="text-xs font-bold uppercase tracking-widest">
+                    {submitted ? 'Enviado!' : 'Enviar Mensagem'}
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white text-[#795558] flex items-center justify-center group-hover:rotate-45 transition-transform">
+                     {submitted ? <CheckCircle className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                  </div>
+                </motion.button>
+              </div>
             </form>
-          </motion.div>
-
-          {/* Social Links & Info & Briefing */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8, delay: 0.4 }}
-            className="space-y-10"
-          >
-
-
-            <div className="bg-[#FCF6EF]/50 rounded-[2rem] p-10">
-              <h3 className="text-2xl font-serif text-[#795558] mb-8">
-                Outros lugares
-              </h3>
-              <div className="space-y-4">
-                {socialLinks.map((social, index) => {
-                  const Icon = social.icon;
-                  return (
-                    <motion.a
-                      key={index}
-                      href={social.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      whileHover={{ x: 8 }}
-                      className="flex items-center gap-6 p-4 rounded-2xl bg-white hover:shadow-md transition-all duration-300 group cursor-pointer border border-transparent hover:border-[#FFDAF0]"
-                    >
-                      <div className={`w-14 h-14 rounded-full ${social.color} flex items-center justify-center group-hover:scale-110 transition-transform duration-300`}>
-                        <Icon className="w-6 h-6 text-[#795558]" />
-                      </div>
-                      <div>
-                        <p className="font-medium text-[#795558] text-lg">
-                          {social.label}
-                        </p>
-                        <p className="text-sm text-gray-500">
-                          {social.label === "Email" ? "Ficar à vontade" : "Ver o dia a dia"}
-                        </p>
-                      </div>
-                    </motion.a>
-                  );
-                })}
-              </div>
-            </div>
-
-            <div className="px-4">
-              <h3 className="text-xl font-serif text-[#795558] mb-4">
-                No seu tempo
-              </h3>
-              <p className="text-gray-600 leading-relaxed mb-4 font-light">
-                Estou sempre por aqui para trocar ideias. Não se preocupe em ter um projeto pronto na cabeça.
-              </p>
-              <div className="flex items-center gap-3 text-sm text-gray-500">
-                <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                <span>Respondo assim que possível</span>
-              </div>
-            </div>
-            
-
-          </motion.div>
+          </div>
         </div>
       </div>
     </section>
