@@ -1,0 +1,16 @@
+@import "./fonts.css";
+@import "./tailwind.css";
+@import "./theme.css";
+
+/* Accessibility High Contrast Mode */
+html.high-contrast {
+  filter: contrast(120%) invert(100%);
+  background-color: #1a1a1a;
+}
+
+html.high-contrast img,
+html.high-contrast video,
+html.high-contrast .no-invert,
+html.high-contrast .vlibras-widget {
+  filter: invert(100%);
+}
