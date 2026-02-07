@@ -50,7 +50,7 @@ export function Footer() {
                 <Sparkles className="w-4 h-4" />
                 <span className="text-[10px] uppercase tracking-[0.4em] font-black">Visual Strategist</span>
               </div>
-              <h2 className="text-6xl md:text-8xl font-serif leading-[0.9] text-white">
+              <h2 className="text-5xl md:text-8xl font-serif leading-[0.9] text-white">
                 Vamos criar <br />
                 <span className="italic font-light opacity-60">o extraordinário.</span>
               </h2>

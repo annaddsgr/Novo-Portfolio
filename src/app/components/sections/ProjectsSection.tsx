@@ -1,9 +1,10 @@
-import { useState, useRef } from "react";
+import { useState, useRef, lazy, Suspense } from "react";
 import { motion, useMotionValue, useSpring, useTransform } from "motion/react";
-import { ImageWithFallback } from "./figma/ImageWithFallback";
-import { ProjectModal } from "./ProjectModal";
-import { ProjectFeed } from "./ProjectFeed";
+import { ImageWithFallback } from "../features/figma/ImageWithFallback";
 import { getImagePath } from '@/app/utils/imagePath';
+
+const ProjectModal = lazy(() => import('../features/ProjectModal').then(module => ({ default: module.ProjectModal })));
+const ProjectFeed = lazy(() => import('../features/ProjectFeed').then(module => ({ default: module.ProjectFeed })));
 
 export interface Project {
   id: number;
@@ -111,7 +112,7 @@ function ProjectCard({ project, index, onSelect }: { project: Project, index: nu
         </motion.div>
 
         {/* Outer Background Typography */}
-        <div className={`absolute -top-12 sm:-top-20 ${isEven ? '-left-6 sm:-left-12' : '-right-6 sm:-right-12'} text-[12rem] sm:text-[20rem] font-serif text-[#795558]/5 leading-none select-none pointer-events-none italic`}>
+        <div className={`absolute -top-12 sm:-top-20 ${isEven ? '-left-4 sm:-left-12' : '-right-4 sm:-right-12'} text-[10rem] sm:text-[20rem] font-serif text-[#795558]/5 leading-none select-none pointer-events-none italic`}>
           0{index + 1}
         </div>
       </div>
@@ -262,7 +263,7 @@ export function ProjectsSection() {
             <span className="text-[10px] uppercase tracking-[0.4em] text-[#795558] font-black">Portfólio Curado</span>
           </div>
 
-          <h2 className="text-6xl md:text-8xl lg:text-[9rem] font-serif text-[#795558] leading-[0.9] mb-12">
+          <h2 className="text-5xl md:text-8xl lg:text-[9rem] font-serif text-[#795558] leading-[0.9] mb-8 md:mb-12">
             Projetos <br /> <span className="italic font-light opacity-60">Selecionados</span>
           </h2>
 
@@ -296,8 +297,10 @@ export function ProjectsSection() {
         </motion.div>
       </div>
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
-      <ProjectFeed isOpen={isFeedOpen} onClose={() => setIsFeedOpen(false)} projects={projects} onSelectProject={(p: Project) => { setSelectedProject(p); setIsFeedOpen(false); }} />
+      <Suspense fallback={null}>
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+        <ProjectFeed isOpen={isFeedOpen} onClose={() => setIsFeedOpen(false)} projects={projects} onSelectProject={(p: Project) => { setSelectedProject(p); setIsFeedOpen(false); }} />
+      </Suspense>
     </section>
   );
 }

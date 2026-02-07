@@ -2,7 +2,7 @@
   "name": "novo-portfolio",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://annaddsgr.github.io/Novo-Portfolio",
+  "homepage": "https://portfolio-anna-nine.vercel.app/",
   "type": "module",
   "scripts": {
     "build": "vite build",

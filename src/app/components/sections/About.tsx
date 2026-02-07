@@ -1,5 +1,5 @@
 import { motion } from 'motion/react';
-import { ImageWithFallback } from '@/app/components/figma/ImageWithFallback';
+import { ImageWithFallback } from '@/app/components/features/figma/ImageWithFallback';
 import { Sparkles, Palette, Lightbulb } from 'lucide-react';
 import { getImagePath } from '@/app/utils/imagePath';
 
@@ -12,7 +12,7 @@ export function About() {
         <div className="absolute top-1/3 left-0 w-full h-[1px] bg-[#795558]" />
       </div>
 
-      <div className="absolute top-20 right-[-5%] text-[25rem] md:text-[45rem] font-serif text-[#795558]/5 pointer-events-none select-none leading-none italic font-light">
+      <div className="absolute top-10 md:top-20 right-[-15%] md:right-[-5%] text-[20rem] md:text-[45rem] font-serif text-[#795558]/5 pointer-events-none select-none leading-none italic font-light">
         A
       </div>
 

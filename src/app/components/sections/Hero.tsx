@@ -1,7 +1,7 @@
 import { motion, useScroll, useTransform } from "motion/react";
 import { useRef } from "react";
 import { Palette, PenTool, Type, Sparkles, ArrowRight } from "lucide-react";
-import { Magnetic } from './Magnetic';
+import { Magnetic } from '../layout/Magnetic';
 
 export function Hero() {
   const containerRef = useRef(null);
@@ -54,7 +54,7 @@ export function Hero() {
               <span className="text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] text-[#795558]">Visual Strategist & Designer</span>
             </div>
 
-            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-[#795558] leading-[0.85] mb-8 md:mb-12 tracking-tight">
+            <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-serif text-[#795558] leading-[0.9] md:leading-[0.85] mb-8 md:mb-12 tracking-tight">
               <span className="block italic opacity-40">Design</span>
               <span className="block relative">
                 com alma
@@ -64,9 +64,9 @@ export function Hero() {
                     y: [0, -10, 0]
                   }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute -right-8 -top-8 hidden xl:block"
+                  className="absolute -right-8 -top-8 hidden md:block"
                 >
-                  <PenTool className="w-24 h-24 text-[#795558]/10" />
+                  <PenTool className="w-16 md:w-24 h-16 md:h-24 text-[#795558]/10" />
                 </motion.div>
               </span>
             </h1>

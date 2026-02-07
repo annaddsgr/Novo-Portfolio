@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, ArrowRight, CheckCircle, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Project } from './ProjectsSection';
+import { Project } from '../sections/ProjectsSection';
 import { getImagePath } from '@/app/utils/imagePath';
 
 interface ProjectModalProps {

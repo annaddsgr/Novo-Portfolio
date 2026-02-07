@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, ArrowUpRight } from 'lucide-react';
-import { Project } from './ProjectsSection';
+import { Project } from '../sections/ProjectsSection';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { getImagePath } from '@/app/utils/imagePath';
 

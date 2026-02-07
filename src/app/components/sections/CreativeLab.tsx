@@ -201,7 +201,7 @@ export function CreativeLab() {
             <div className="absolute inset-0 pointer-events-none overflow-hidden opacity-[0.03]">
                 <div className="absolute top-0 left-1/4 w-[1px] h-full bg-[#795558]" />
                 <div className="absolute top-1/2 left-0 w-full h-[1px] bg-[#795558]" />
-                <div className="absolute bottom-20 left-10 text-[20rem] font-serif italic text-[#795558]">Lab</div>
+                <div className="absolute bottom-20 left-4 md:left-10 text-[10rem] md:text-[20rem] font-serif italic text-[#795558]">Lab</div>
             </div>
 
             <div className="max-w-7xl mx-auto px-6 md:px-12 relative z-10">
@@ -216,7 +216,7 @@ export function CreativeLab() {
                             <FlaskConical className="w-3.5 h-3.5 text-[#795558]" />
                             <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[#795558]">Alquimia de Marca</span>
                         </div>
-                        <h2 className="text-6xl md:text-8xl lg:text-9xl font-serif text-[#795558] leading-[0.85] tracking-tight">
+                        <h2 className="text-5xl md:text-8xl lg:text-9xl font-serif text-[#795558] leading-[0.85] tracking-tight">
                             Color <br /> <span className="italic font-light opacity-60">Laboratory</span>
                         </h2>
                         <div className="max-w-xl mx-auto pt-8">
