@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, ArrowRight, CheckCircle, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
@@ -11,7 +11,7 @@ interface ProjectModalProps {
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+
 
   const galleryImages = project ? [project.image, ...project.mockups] : [];
 
@@ -57,7 +57,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           <div className="md:w-[55%] h-[50vh] md:h-full bg-white relative overflow-y-auto no-scrollbar scroll-smooth">
             <div className="flex flex-col gap-1 p-1">
               {galleryImages.map((img, idx) => (
-                <motion.div 
+                <motion.div
                   key={idx}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -82,7 +82,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
           {/* RIGHT: Sophisticated Content Shell */}
           <div className="md:w-[45%] h-[50vh] md:h-full overflow-y-auto custom-scrollbar bg-[#FCF6EF] relative">
-            <div className="p-8 md:p-14 lg:p-20 space-y-12">
+            <div className="p-6 sm:p-10 md:p-12 lg:p-16 space-y-12">
               {/* Header Info */}
               <div className="space-y-6">
                 <div className="flex items-center gap-4">
@@ -125,8 +125,8 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                     <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558]/40">Cores</h3>
                     <div className="flex gap-2">
                       {project.colors.map((color, idx) => (
-                        <div 
-                          key={idx} 
+                        <div
+                          key={idx}
                           className="w-10 h-10 rounded-full border border-white shadow-sm"
                           style={{ backgroundColor: color }}
                           title={color}
@@ -154,16 +154,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
                 {/* Deliverables Chip Set */}
                 {project.deliverables && (
-                   <section className="space-y-4 pt-4">
-                      <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558]/40">Entregáveis</h3>
-                      <div className="flex flex-wrap gap-2">
-                        {project.deliverables.map((item, idx) => (
-                          <span key={idx} className="px-3 py-1.5 rounded-lg bg-white border border-[#795558]/10 text-[10px] font-bold text-[#795558]/70 uppercase tracking-widest whitespace-nowrap">
-                            {item}
-                          </span>
-                        ))}
-                      </div>
-                   </section>
+                  <section className="space-y-4 pt-4">
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558]/40">Entregáveis</h3>
+                    <div className="flex flex-wrap gap-2">
+                      {project.deliverables.map((item, idx) => (
+                        <span key={idx} className="px-3 py-1.5 rounded-lg bg-white border border-[#795558]/10 text-[10px] font-bold text-[#795558]/70 uppercase tracking-widest whitespace-nowrap">
+                          {item}
+                        </span>
+                      ))}
+                    </div>
+                  </section>
                 )}
 
                 {/* Results Quote */}
@@ -182,7 +182,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 {/* Final CTA */}
                 <div className="pt-12 flex flex-col items-center gap-8">
                   <div className="w-12 h-[1px] bg-[#795558]/20" />
-                  <a 
+                  <a
                     href={`https://wa.me/5531992781019?text=Olá Anna! Amei o projeto ${project.title}.`}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -201,34 +201,34 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
       {/* Lightbox Immersive */}
       {lightboxIndex !== null && (
         <motion.div
-           initial={{ opacity: 0 }}
-           animate={{ opacity: 1 }}
-           exit={{ opacity: 0 }}
-           className="fixed inset-0 z-[100] bg-[#FCF6EF] flex items-center justify-center backdrop-blur-3xl"
-           onClick={() => setLightboxIndex(null)}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          className="fixed inset-0 z-[100] bg-[#FCF6EF] flex items-center justify-center backdrop-blur-3xl"
+          onClick={() => setLightboxIndex(null)}
         >
           <button className="absolute top-8 right-8 text-[#795558] p-4 transition-transform hover:rotate-90">
             <X className="w-8 h-8" />
           </button>
-          
+
           <div className="w-full h-full flex items-center justify-center p-6 md:p-20">
-            <motion.img 
+            <motion.img
               key={lightboxIndex}
               initial={{ opacity: 0, scale: 0.9 }}
               animate={{ opacity: 1, scale: 1 }}
-              src={galleryImages[lightboxIndex]} 
+              src={galleryImages[lightboxIndex]}
               className="max-h-full max-w-full object-contain rounded-xl shadow-2xl"
             />
           </div>
 
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 flex items-center gap-8">
-             <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((prev) => (prev! - 1 + galleryImages.length) % galleryImages.length)}} className="w-14 h-14 rounded-full border border-[#795558]/20 flex items-center justify-center text-[#795558] hover:bg-[#795558] hover:text-white transition-all">
-               <ChevronLeft className="w-6 h-6" />
-             </button>
-             <span className="text-xs font-black text-[#795558]/40 tracking-[0.5em]">{lightboxIndex + 1} / {galleryImages.length}</span>
-             <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((prev) => (prev! + 1) % galleryImages.length)}} className="w-14 h-14 rounded-full border border-[#795558]/20 flex items-center justify-center text-[#795558] hover:bg-[#795558] hover:text-white transition-all">
-               <ChevronRight className="w-6 h-6" />
-             </button>
+            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((prev) => (prev! - 1 + galleryImages.length) % galleryImages.length) }} className="w-14 h-14 rounded-full border border-[#795558]/20 flex items-center justify-center text-[#795558] hover:bg-[#795558] hover:text-white transition-all">
+              <ChevronLeft className="w-6 h-6" />
+            </button>
+            <span className="text-xs font-black text-[#795558]/40 tracking-[0.5em]">{lightboxIndex + 1} / {galleryImages.length}</span>
+            <button onClick={(e) => { e.stopPropagation(); setLightboxIndex((prev) => (prev! + 1) % galleryImages.length) }} className="w-14 h-14 rounded-full border border-[#795558]/20 flex items-center justify-center text-[#795558] hover:bg-[#795558] hover:text-white transition-all">
+              <ChevronRight className="w-6 h-6" />
+            </button>
           </div>
         </motion.div>
       )}

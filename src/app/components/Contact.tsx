@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { motion } from 'motion/react';
-import { Instagram, Mail, Send, CheckCircle, Sparkles, MessageCircle, ArrowRight } from 'lucide-react';
+import { Instagram, Mail, CheckCircle, ArrowRight } from 'lucide-react';
 import { toast } from 'sonner';
 
 export function Contact() {
@@ -13,15 +13,15 @@ export function Contact() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Configura o número e a mensagem do WhatsApp
     const phoneNumber = "5531992781019";
     const text = `Olá Anna! ✨\n\nMe chamo *${formData.name}*.\n\n${formData.message}\n\n(Meu email para contato é: ${formData.email})`;
-    
+
     const whatsappUrl = `https://wa.me/${phoneNumber}?text=${encodeURIComponent(text)}`;
-    
+
     toast.success('Iniciando conversa no WhatsApp...');
-    
+
     setTimeout(() => {
       window.open(whatsappUrl, '_blank');
       setSubmitted(true);
@@ -55,7 +55,7 @@ export function Contact() {
             {/* <Sparkles className="w-4 h-4 text-[#795558]" /> */}
             {/* <span className="text-[10px] uppercase tracking-[0.4em] text-[#795558] font-bold">Contato</span> */}
           </motion.div>
-          
+
           <motion.h2
             initial={{ opacity: 0, scale: 0.95 }}
             whileInView={{ opacity: 1, scale: 1 }}
@@ -65,8 +65,8 @@ export function Contact() {
           >
             Vamos criar algo <span className="italic">único</span>?
           </motion.h2>
-          
-          <motion.p 
+
+          <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
@@ -79,46 +79,46 @@ export function Contact() {
 
         {/* The Card */}
         <div className="bg-white rounded-[3rem] shadow-[0_30px_60px_-15px_rgba(121,85,88,0.1)] overflow-hidden flex flex-col lg:flex-row relative z-10 border border-[#795558]/5">
-          
+
           {/* Left: Contact Info & Vibe */}
           <div className="lg:w-[40%] bg-[#795558] text-[#FCF6EF] p-12 md:p-16 flex flex-col justify-between relative overflow-hidden">
-             {/* Abstract Texture */}
-             <div className="absolute inset-0 opacity-10">
-                <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
-             </div>
+            {/* Abstract Texture */}
+            <div className="absolute inset-0 opacity-10">
+              <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-white via-transparent to-transparent" />
+            </div>
 
-             <div className="relative z-10">
-               <h3 className="text-2xl font-serif mb-2 italic">Anna Designer</h3>
-               <p className="text-[#FCF6EF]/60 text-sm font-light uppercase tracking-widest">Belo Horizonte - Brasil</p>
-             </div>
+            <div className="relative z-10">
+              <h3 className="text-2xl font-serif mb-2 italic">Anna Designer</h3>
+              <p className="text-[#FCF6EF]/60 text-sm font-light uppercase tracking-widest">Belo Horizonte - Brasil</p>
+            </div>
 
-             <div className="relative z-10 space-y-8 my-12">
-               <a href="mailto:contato@annadesigner.com" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
-                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
-                   <Mail className="w-5 h-5" />
-                 </div>
-                 <div>
-                   <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Email</p>
-                   <p className="font-serif text-lg">contato@anna.com.br</p>
-                 </div>
-               </a>
+            <div className="relative z-10 space-y-8 my-12">
+              <a href="mailto:contato@annadesigner.com" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
+                  <Mail className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Email</p>
+                  <p className="font-serif text-lg">contato@anna.com.br</p>
+                </div>
+              </a>
 
-               <a href="https://instagram.com/annadsgr" target="_blank" rel="noreferrer" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
-                 <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
-                   <Instagram className="w-5 h-5" />
-                 </div>
-                 <div>
-                    <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Instagram</p>
-                    <p className="font-serif text-lg">@annadsgr</p>
-                 </div>
-               </a>
-             </div>
+              <a href="https://instagram.com/annadsgr" target="_blank" rel="noreferrer" className="flex items-center gap-4 group cursor-pointer opacity-80 hover:opacity-100 transition-opacity">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-white group-hover:text-[#795558] transition-all duration-500">
+                  <Instagram className="w-5 h-5" />
+                </div>
+                <div>
+                  <p className="text-xs font-bold uppercase tracking-widest opacity-50 mb-1">Instagram</p>
+                  <p className="font-serif text-lg">@annadsgr</p>
+                </div>
+              </a>
+            </div>
 
-             <div className="relative z-10 pt-8 border-t border-white/10">
-                <p className="text-sm font-light opacity-60 leading-relaxed italic">
-                  "O design é a linguagem silenciosa que conecta marcas a corações."
-                </p>
-             </div>
+            <div className="relative z-10 pt-8 border-t border-white/10">
+              <p className="text-sm font-light opacity-60 leading-relaxed italic">
+                "O design é a linguagem silenciosa que conecta marcas a corações."
+              </p>
+            </div>
           </div>
 
           {/* Right: The Letter Form */}
@@ -165,15 +165,25 @@ export function Contact() {
                   placeholder="Conte um pouco sobre sua ideia..."
                   className="w-full bg-[#FCF6EF]/30 border-b border-[#795558]/10 px-4 py-4 text-[#795558] placeholder-[#795558]/30 focus:outline-none focus:border-[#795558] transition-colors resize-none rounded-t-lg hover:bg-[#FCF6EF]/50"
                 />
+                <button
+                  type="button"
+                  onClick={() => {
+                    window.history.pushState({}, '', `${import.meta.env.BASE_URL}briefing`);
+                    window.dispatchEvent(new PopStateEvent('popstate'));
+                  }}
+                  className="text-[10px] font-bold uppercase tracking-widest text-[#795558]/40 hover:text-[#795558] transition-colors mt-2 block ml-1"
+                >
+                  Ou clique aqui para preencher um briefing completo ✨
+                </button>
               </div>
 
               <div className="flex items-center justify-between pt-4">
-                 <div className="flex items-center gap-2 text-[#795558]/40 text-xs font-bold uppercase tracking-widest">
-                    <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
-                    Agenda 2024 Aberta
-                 </div>
+                <div className="flex items-center gap-2 text-[#795558]/40 text-xs font-bold uppercase tracking-widest">
+                  <div className="w-2 h-2 rounded-full bg-green-400 animate-pulse" />
+                  Agenda 2024 Aberta
+                </div>
 
-                 <motion.button
+                <motion.button
                   type="submit"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
@@ -184,7 +194,7 @@ export function Contact() {
                     {submitted ? 'Enviado!' : 'Enviar Mensagem'}
                   </span>
                   <div className="w-10 h-10 rounded-full bg-white text-[#795558] flex items-center justify-center group-hover:rotate-45 transition-transform">
-                     {submitted ? <CheckCircle className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
+                    {submitted ? <CheckCircle className="w-5 h-5" /> : <ArrowRight className="w-5 h-5" />}
                   </div>
                 </motion.button>
               </div>

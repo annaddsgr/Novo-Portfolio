@@ -18,7 +18,19 @@ export function Header() {
 
   const scrollToSection = (id: string) => {
     setIsMenuOpen(false);
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // Se não achar o elemento (está na página de briefing), volta pra home primeiro
+      window.history.pushState({}, '', `${import.meta.env.BASE_URL}`);
+      window.dispatchEvent(new PopStateEvent('popstate'));
+
+      // Espera a navegação e o componente montar
+      setTimeout(() => {
+        document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
   };
 
   const navItems = [
@@ -29,26 +41,29 @@ export function Header() {
     { id: 'contato', label: t('nav.contact') },
   ];
 
+  const goBriefing = () => {
+    window.history.pushState({}, '', `${import.meta.env.BASE_URL}briefing`);
+    window.dispatchEvent(new PopStateEvent('popstate'));
+  };
+
   return (
     <>
-      <header 
-        className={`fixed top-0 left-0 right-0 z-[1000] transition-all duration-500 flex items-center ${
-          isScrolled ? 'bg-[#FCF6EF]/80 backdrop-blur-md shadow-sm h-20' : 'bg-transparent h-28'
-        }`}
+      <header
+        className={`fixed top-0 left-0 right-0 z-[5000] transition-all duration-500 flex items-center ${isScrolled ? 'bg-[#FCF6EF]/80 backdrop-blur-md shadow-sm h-16 md:h-20' : 'bg-transparent h-20 md:h-28'
+          }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
           {/* Logo */}
-          <motion.div 
+          <motion.div
             onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}
             className="group cursor-pointer select-none"
             whileHover={{ scale: 1.05 }}
           >
-            <img 
+            <img
               src={`${import.meta.env.BASE_URL}assets/logo.png`}
-              alt="Anna Designer Gráfico" 
-              className={`transition-all duration-500 object-contain ${
-                isScrolled ? 'h-14 md:h-20' : 'h-20 md:h-28'
-              }`}
+              alt="Anna Designer Gráfico"
+              className={`transition-all duration-500 object-contain ${isScrolled ? 'h-14 md:h-20' : 'h-20 md:h-28'
+                }`}
             />
           </motion.div>
 
@@ -64,6 +79,14 @@ export function Header() {
                 <span className="absolute -bottom-1 left-0 w-0 h-[1.5px] bg-[#795558] transition-all duration-300 group-hover:w-full" />
               </button>
             ))}
+
+            <button
+              onClick={goBriefing}
+              className="px-6 py-2.5 rounded-full bg-[#795558] text-[#FCF6EF] text-[10px] font-bold uppercase tracking-widest hover:bg-[#5A3D3F] transition-all shadow-md hover:shadow-lg"
+            >
+              Iniciar Projeto
+            </button>
+
             <button
               onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
               className="flex items-center gap-2 px-4 py-2 rounded-full border border-[#795558]/20 hover:border-[#795558] transition-all text-[#795558] text-[10px] font-bold uppercase tracking-widest bg-white/50 backdrop-blur-sm"
@@ -112,6 +135,15 @@ export function Header() {
                 initial={{ opacity: 0, scale: 0.9 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ delay: 0.6 }}
+                onClick={goBriefing}
+                className="mt-4 px-8 py-4 rounded-full bg-[#795558] text-[#FCF6EF] text-lg font-serif italic shadow-xl"
+              >
+                Iniciar Projeto
+              </motion.button>
+              <motion.button
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.7 }}
                 onClick={() => {
                   setLanguage(language === 'pt' ? 'en' : 'pt');
                   setIsMenuOpen(false);

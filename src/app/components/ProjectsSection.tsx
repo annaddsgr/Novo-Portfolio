@@ -57,10 +57,10 @@ function ProjectCard({ project, index, onSelect }: { project: Project, index: nu
       style={{ perspective: 1000 }}
     >
       <div className="absolute -top-12 -left-3 z-10 text-9xl font-serif text-[#795558]/5 pointer-events-none select-none italic group-hover:text-[#795558]/10 transition-colors">
-         0{index + 1}
+        0{index + 1}
       </div>
 
-      <motion.div 
+      <motion.div
         style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
         className="relative aspect-[4/5] md:aspect-[3/4] lg:aspect-video rounded-[3rem] overflow-hidden shadow-[0_30px_100px_rgba(121,85,88,0.15)] bg-white border-[8px] md:border-[12px] border-white group-hover:shadow-[0_50px_120px_rgba(121,85,88,0.25)] transition-all duration-700"
       >
@@ -70,47 +70,47 @@ function ProjectCard({ project, index, onSelect }: { project: Project, index: nu
           className="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-110"
           style={{ transform: "translateZ(30px)" }}
         />
-        
+
         <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 overflow-hidden">
-           <div 
-             className="absolute bottom-0 left-0 right-0 p-8 md:p-12 translate-y-20 group-hover:translate-y-0 transition-transform duration-700"
-             style={{ transform: "translateZ(60px)" }}
-           >
-              <div className="flex justify-between items-end">
-                 <div className="text-white">
-                   <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-2">{project.category}</p>
-                   <h3 className="text-3xl md:text-4xl font-serif italic mb-4">{project.title}</h3>
-                 </div>
+          <div
+            className="absolute bottom-0 left-0 right-0 p-8 md:p-12 translate-y-20 group-hover:translate-y-0 transition-transform duration-700"
+            style={{ transform: "translateZ(60px)" }}
+          >
+            <div className="flex justify-between items-end">
+              <div className="text-white">
+                <p className="text-[10px] font-black uppercase tracking-[0.4em] mb-2">{project.category}</p>
+                <h3 className="text-3xl md:text-4xl font-serif italic mb-4">{project.title}</h3>
               </div>
-           </div>
+            </div>
+          </div>
         </div>
 
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0 }}
           whileHover={{ opacity: 1, scale: 1, rotate: 15 }}
           className="absolute bottom-1/4 left-10 z-20 pointer-events-none bg-[#FFDAF0] text-[#795558] px-4 py-2 rounded-full text-[10px] font-black uppercase tracking-widest shadow-xl border border-white"
           style={{ transform: "translateZ(100px)" }}
         >
-           Visual Strategy
+          Visual Strategy
         </motion.div>
 
         <div className="absolute top-8 right-8 z-10" style={{ transform: "translateZ(50px)" }}>
-           <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FCF6EF]/90 backdrop-blur-md rounded-full flex flex-col items-center justify-center border border-white/50 shadow-lg group-hover:rotate-12 transition-transform duration-500">
-              <span className="text-[10px] font-black text-[#795558] mb-0.5">{project.year}</span>
-              <div className="w-4 h-[1px] bg-[#795558]/30" />
-              <span className="text-[8px] font-bold text-[#795558]/40 uppercase tracking-tighter">Edition</span>
-           </div>
+          <div className="w-16 h-16 md:w-20 md:h-20 bg-[#FCF6EF]/90 backdrop-blur-md rounded-full flex flex-col items-center justify-center border border-white/50 shadow-lg group-hover:rotate-12 transition-transform duration-500">
+            <span className="text-[10px] font-black text-[#795558] mb-0.5">{project.year}</span>
+            <div className="w-4 h-[1px] bg-[#795558]/30" />
+            <span className="text-[8px] font-bold text-[#795558]/40 uppercase tracking-tighter">Edition</span>
+          </div>
         </div>
       </motion.div>
 
       <div className="mt-8 flex justify-between items-start px-2 md:px-3 group-hover:translate-y-[-4px] transition-transform duration-500">
-         <div className="space-y-1">
-            <h4 className="text-xl md:text-2xl font-serif text-[#795558] group-hover:italic transition-all">{project.title}</h4>
-            <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-widest">{project.category}</p>
-         </div>
-         <button className="text-[10px] font-black uppercase tracking-widest text-[#795558] pb-1 border-b-2 border-[#795558]/10 hover:border-[#795558] transition-all">
-            Projeto Completo
-         </button>
+        <div className="space-y-1">
+          <h4 className="text-xl md:text-2xl font-serif text-[#795558] group-hover:italic transition-all">{project.title}</h4>
+          <p className="text-[10px] md:text-xs text-gray-400 font-bold uppercase tracking-widest">{project.category}</p>
+        </div>
+        <button className="text-[10px] font-black uppercase tracking-widest text-[#795558] pb-1 border-b-2 border-[#795558]/10 hover:border-[#795558] transition-all">
+          Projeto Completo
+        </button>
       </div>
     </motion.div>
   );
@@ -241,7 +241,7 @@ export function ProjectsSection() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [dragConstraints, setDragConstraints] = useState({ left: 0, right: 0 });
   const scrollX = useMotionValue(0);
-  
+
   const progress = useTransform(scrollX, [dragConstraints.left, 0], [1, 0]);
   const progressSpring = useSpring(progress, { stiffness: 100, damping: 30 });
 
@@ -267,7 +267,13 @@ export function ProjectsSection() {
 
   const slide = (direction: 'next' | 'prev') => {
     if (!sliderRef.current) return;
-    const cardWidth = window.innerWidth * 0.3;
+
+    // Get card width based on screen size (matching CSS: w-[75vw] md:w-[50vw] lg:w-[35vw])
+    let ratio = 0.75; // Mobile default
+    if (window.innerWidth >= 1024) ratio = 0.35; // lg
+    else if (window.innerWidth >= 768) ratio = 0.50; // md
+
+    const cardWidth = window.innerWidth * ratio;
     const currentX = scrollX.get();
     const targetX = direction === 'next' ? currentX - cardWidth : currentX + cardWidth;
     const clampedX = Math.min(0, Math.max(dragConstraints.left, targetX));
@@ -279,50 +285,49 @@ export function ProjectsSection() {
       {/* Header Container - Always Centered */}
       <div className="w-full max-w-7xl px-6 md:px-12">
         <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            className="mb-20 text-center"
-          >
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#795558]/5 mb-6">
-              <FolderOpen className="w-4 h-4 text-[#795558]" />
-              <span className="text-xs uppercase tracking-[0.3em] text-[#795558] font-bold">Portfolio Selecionado</span>
-            </div>
-            
-            <h2 className="text-5xl md:text-7xl font-serif text-[#795558] leading-tight mb-10">
-              Meus <span className="italic font-light">Destaques</span>
-            </h2>
-            
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6">
-              <div className="flex flex-wrap justify-center gap-2">
-                {categories.map((category) => (
-                  <button
-                    key={category}
-                    onClick={() => {
-                        setActiveCategory(category);
-                        scrollX.set(0);
-                    }}
-                    className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${
-                      activeCategory === category ? "bg-[#795558] text-white shadow-xl scale-105" : "bg-white text-[#795558] border border-[#795558]/10 hover:border-[#795558]"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="mb-20 text-center"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-[#795558]/5 mb-6">
+            <FolderOpen className="w-4 h-4 text-[#795558]" />
+            <span className="text-xs uppercase tracking-[0.3em] text-[#795558] font-bold">Portfolio Selecionado</span>
+          </div>
+
+          <h2 className="text-5xl md:text-7xl font-serif text-[#795558] leading-tight mb-10">
+            Meus <span className="italic font-light">Destaques</span>
+          </h2>
+
+          <div className="flex flex-col md:flex-row items-center justify-center gap-6">
+            <div className="flex flex-wrap justify-center gap-2">
+              {categories.map((category) => (
+                <button
+                  key={category}
+                  onClick={() => {
+                    setActiveCategory(category);
+                    scrollX.set(0);
+                  }}
+                  className={`px-8 py-3 rounded-full text-[10px] font-black uppercase tracking-widest transition-all duration-500 ${activeCategory === category ? "bg-[#795558] text-white shadow-xl scale-105" : "bg-white text-[#795558] border border-[#795558]/10 hover:border-[#795558]"
                     }`}
-                  >
-                    {category}
-                  </button>
-                ))}
-              </div>
-              <button
-                onClick={() => setIsFeedOpen(true)}
-                className="flex items-center gap-3 px-8 py-3 rounded-full bg-white text-[#795558] text-[10px] font-black uppercase tracking-widest shadow-md hover:shadow-xl transition-all border border-[#795558]/5"
-              >
-                <FolderOpen className="w-4 h-4" /> Ver Galeria Completa
-              </button>
+                >
+                  {category}
+                </button>
+              ))}
             </div>
-          </motion.div>
+            <button
+              onClick={() => setIsFeedOpen(true)}
+              className="flex items-center gap-3 px-8 py-3 rounded-full bg-white text-[#795558] text-[10px] font-black uppercase tracking-widest shadow-md hover:shadow-xl transition-all border border-[#795558]/5"
+            >
+              <FolderOpen className="w-4 h-4" /> Ver Galeria Completa
+            </button>
+          </div>
+        </motion.div>
       </div>
 
       {/* Gallery Container - Full Width Center */}
       <div ref={containerRef} className="w-full relative group/gallery flex flex-col items-center">
-        <motion.div 
+        <motion.div
           ref={sliderRef}
           drag={dragConstraints.left < 0 ? "x" : false}
           dragConstraints={dragConstraints}
@@ -337,18 +342,18 @@ export function ProjectsSection() {
             ))}
           </AnimatePresence>
         </motion.div>
-        
+
         {/* Enhanced Progress Bar - Only if needed */}
         {dragConstraints.left < 0 && (
           <div className="mt-4 max-w-2xl w-full px-12 flex items-center gap-8 justify-center">
-             <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">01</span>
-             <div className="flex-1 max-w-xs h-[2px] bg-[#795558]/10 relative rounded-full overflow-hidden">
-                <motion.div 
-                   className="absolute left-0 top-0 bottom-0 bg-[#795558] origin-left w-full"
-                   style={{ scaleX: progressSpring }}
-                />
-             </div>
-             <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">02</span>
+            <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">01</span>
+            <div className="flex-1 max-w-xs h-[2px] bg-[#795558]/10 relative rounded-full overflow-hidden">
+              <motion.div
+                className="absolute left-0 top-0 bottom-0 bg-[#795558] origin-left w-full"
+                style={{ scaleX: progressSpring }}
+              />
+            </div>
+            <span className="text-[10px] font-black text-[#795558]/40 uppercase tracking-widest">02</span>
           </div>
         )}
       </div>
