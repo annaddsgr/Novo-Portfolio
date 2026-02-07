@@ -1,0 +1,21 @@
+{
+  "name": "Anna | Designer Gráfico & Estrategista Visual",
+  "short_name": "Anna Designer",
+  "description": "Portfólio de Anna, especialista em Identidade Visual e Design Estratégico.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FCF6EF",
+  "theme_color": "#795558",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
