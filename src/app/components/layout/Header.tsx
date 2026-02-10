@@ -45,7 +45,7 @@ export function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 left-0 right-0 z-[5000] transition-all duration-700 ease-in-out flex items-center ${isScrolled ? 'bg-[#FCF6EF]/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(121,85,88,0.05)] h-16 md:h-18 border-b border-[#795558]/5' : 'bg-transparent h-18 md:h-24'
+        className={`fixed top-0 left-0 right-0 z-[5000] transition-all duration-700 ease-in-out flex items-center ${isScrolled ? 'bg-[#FCF6EF]/85 backdrop-blur-xl shadow-[0_4px_30px_rgba(121,85,88,0.05)] h-16 md:h-18 border-b border-[#795558]/5' : 'bg-[#FCF6EF]/95 backdrop-blur-md md:bg-transparent md:backdrop-blur-none shadow-sm md:shadow-none h-20 md:h-24'
           }`}
       >
         <div className="max-w-7xl mx-auto px-6 md:px-12 w-full flex justify-between items-center">
@@ -106,16 +106,25 @@ export function Header() {
             </div>
           </nav>
 
-          {/* Mobile Menu Toggle */}
-          <div className="flex items-center gap-4 md:hidden">
+          {/* Mobile Menu Toggle & Actions */}
+          <div className="flex items-center gap-4 md:hidden pr-2">
+            {/* Language Toggle Mobile */}
+             <button
+                onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+                className="w-8 h-8 flex items-center justify-center rounded-full border border-[#795558]/10 text-[#795558] text-[9px] font-black bg-white/50 backdrop-blur-sm shadow-sm"
+            >
+                {language.toUpperCase()}
+            </button>
+
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="text-[#795558] p-2 relative z-[6000]"
+              className="relative z-[6000] p-2.5 text-[#795558] bg-white/50 backdrop-blur-sm rounded-full border border-[#795558]/10 shadow-sm"
+              aria-label="Toggle Menu"
             >
-              <div className="relative w-6 h-6">
-                <span className={`absolute left-0 w-full h-[1.5px] bg-current transition-all duration-500 ${isMenuOpen ? 'top-3 rotate-45' : 'top-1'}`} />
-                <span className={`absolute left-0 w-full h-[1.5px] bg-current transition-all duration-500 top-3 ${isMenuOpen ? 'opacity-0 scale-x-0' : 'opacity-100'}`} />
-                <span className={`absolute left-0 w-full h-[1.5px] bg-current transition-all duration-500 ${isMenuOpen ? 'top-3 -rotate-45' : 'top-5'}`} />
+              <div className="flex flex-col gap-1.5 items-end w-6">
+                 <span className={`block h-[2px] bg-current transition-all duration-300 origin-center ${isMenuOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-6'}`} />
+                 <span className={`block h-[2px] bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'w-4'}`} />
+                 <span className={`block h-[2px] bg-current transition-all duration-300 origin-center ${isMenuOpen ? 'w-6 -rotate-45 -translate-y-[8px]' : 'w-6'}`} />
               </div>
             </button>
           </div>
@@ -175,6 +184,13 @@ export function Header() {
                 <a href="https://instagram.com/annadsgr" target="_blank" rel="noreferrer" className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40">Instagram</a>
                 <div className="w-[1px] h-3 bg-[#795558]/10" />
                 <a href="mailto:contato@anna.com" className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40">Email</a>
+                <div className="w-[1px] h-3 bg-[#795558]/10" />
+                <button
+                   onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+                   className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40 hover:text-[#795558]"
+                >
+                   {language.toUpperCase()}
+                </button>
               </motion.div>
             </div>
           </motion.div>

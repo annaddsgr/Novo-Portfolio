@@ -1,11 +1,19 @@
 import { useState, useRef, useEffect } from 'react';
-import { motion } from 'motion/react';
+import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'motion/react';
 import {
     MousePointer2,
     FlaskConical,
     Dna,
-    MoveRight
+    MoveRight,
+    Sparkles,
+    Target,
+    Layers,
+    Hexagon,
+    Menu,
+    Palette
 } from 'lucide-react';
+import { analyzeColor } from '@/app/utils/colorPsychology';
 
 // --- Utilities ---
 
@@ -18,43 +26,6 @@ const hslToHex = (h: number, s: number, l: number) => {
         return Math.round(255 * color).toString(16).padStart(2, '0');
     };
     return `#${f(0)}${f(8)}${f(4)}`.toUpperCase();
-};
-
-const getColorInfo = (h: number, s: number, l: number) => {
-    const isPastel = s < 50 && l > 70;
-    const isDeep = l < 40;
-    const isVivid = s > 70 && l > 40 && l < 60;
-
-    let baseInfo = {
-        feeling: '',
-        industries: [''],
-        desc: '',
-        concept: ''
-    };
-
-    if (h >= 345 || h < 15) baseInfo = { feeling: 'Energia, Paixão, Coragem', industries: ['Fitness', 'Gastronomia', 'Eventos'], desc: 'O vermelho é vibrante e exige atenção imediata.', concept: 'Impulso Vital' };
-    else if (h >= 15 && h < 45) baseInfo = { feeling: 'Criatividade, Calor, Amizade', industries: ['Educação', 'Interiores', 'Infantil'], desc: 'Laranja comunica acessibilidade e alegria.', concept: 'Expressão Criativa' };
-    else if (h >= 45 && h < 75) baseInfo = { feeling: 'Otimismo, Foco, Inteligência', industries: ['Educação', 'Tecnologia', 'Consultoria'], desc: 'Amarelo traz luz e clareza para a marca.', concept: 'Luz Cognitiva' };
-    else if (h >= 75 && h < 165) baseInfo = { feeling: 'Equilíbrio, Saúde, Crescimento', industries: ['Medicina', 'Sustentabilidade', 'Bem-estar'], desc: 'Verde é a cor da vida e da harmonia natural.', concept: 'Equilíbrio Orgânico' };
-    else if (h >= 165 && h < 200) baseInfo = { feeling: 'Clareza, Modernidade, Frescor', industries: ['Higiene', 'Startups', 'Tecnologia'], desc: 'Ciano comunica inovação e transparência.', concept: 'Inovação Fluida' };
-    else if (h >= 200 && h < 260) baseInfo = { feeling: 'Confiança, Paz, Profissionalismo', industries: ['Direito', 'TI', 'Saúde'], desc: 'Azul constrói confiança e autoridade serena.', concept: 'Autoridade Estável' };
-    else if (h >= 260 && h < 310) baseInfo = { feeling: 'Luxo, Mistério, Criatividade', industries: ['Estética', 'Misticismo', 'Premium'], desc: 'Roxo remete à sofisticação e ao inalcançável.', concept: 'Luxo Enigmático' };
-    else baseInfo = { feeling: 'Afeto, Doçura, Modernidade', industries: ['Beleza', 'Moda', 'Joalheria'], desc: 'Rosa moderno é sofisticado, empático e acolhedor.', concept: 'Empatia Moderna' };
-
-    if (isPastel) {
-        baseInfo.desc = `Em tom pastel, esta cor transmite extrema suavidade e acolhimento.`;
-        baseInfo.feeling = 'Calma, Delicadeza, Leveza';
-        baseInfo.concept = 'Essência Suave';
-    } else if (isDeep) {
-        baseInfo.desc = `Este tom profundo comunica seriedade, mistério e autoridade máxima.`;
-        baseInfo.feeling = 'Poder, Intelecto, Nobreza';
-        baseInfo.concept = 'Foco Profundo';
-    } else if (isVivid) {
-        baseInfo.desc = `Este tom vibrante é ideal para marcas que querem liderar e serem lembradas.`;
-        baseInfo.concept = 'Presença Absoluta';
-    }
-
-    return baseInfo;
 };
 
 // --- Sub-Components ---
@@ -184,12 +155,16 @@ const AlchemyPicker = ({ onColorChange }: { onColorChange: (h: number, s: number
 export function CreativeLab() {
     const [activeColor, setActiveColor] = useState({ h: 15, s: 40, l: 45 });
 
+    const navigate = useNavigate();
+
     const goBriefing = () => {
-        window.history.pushState({}, '', `${import.meta.env.BASE_URL}briefing`);
-        window.dispatchEvent(new PopStateEvent('popstate'));
+        navigate('/briefing');
     };
 
-    const wheelInfo = getColorInfo(activeColor.h, activeColor.s, activeColor.l);
+    // Use advanced Psychology analysis
+    const colorData = analyzeColor(activeColor.h, activeColor.s, activeColor.l);
+    
+    // Hex Calculations for Display
     const mainHex = hslToHex(activeColor.h, activeColor.s, activeColor.l);
     const compHex = hslToHex((activeColor.h + 180) % 360, activeColor.s, activeColor.l);
     const analo1 = hslToHex((activeColor.h + 30) % 360, activeColor.s, activeColor.l);
@@ -227,7 +202,7 @@ export function CreativeLab() {
                     </motion.div>
                 </header>
 
-                <div className="grid lg:grid-cols-12 gap-16 md:gap-24 items-start">
+                <div className="grid lg:grid-cols-12 gap-12 md:gap-24 items-start">
                     {/* Interaction Side */}
                     <motion.div
                         initial={{ opacity: 0, x: -50 }}
@@ -249,8 +224,8 @@ export function CreativeLab() {
                                     <p className="text-2xl font-serif text-[#795558] tracking-wider">{mainHex}</p>
                                 </div>
                                 <div className="space-y-2">
-                                    <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">Conceito</span>
-                                    <p className="text-xl font-serif italic text-[#795558]/70">{wheelInfo.concept}</p>
+                                    <span className="text-[8px] font-bold text-gray-300 uppercase tracking-widest">Classificação</span>
+                                    <p className="text-xl font-serif italic text-[#795558]/70 leading-tight">{colorData.title}</p>
                                 </div>
                             </div>
                         </div>
@@ -268,42 +243,63 @@ export function CreativeLab() {
                             {/* Abstract Element inside card */}
                             <div className="absolute -top-10 -right-10 w-40 h-40 rounded-full opacity-[0.04]" style={{ backgroundColor: mainHex }} />
 
-                            <div className="flex items-center gap-8 mb-16">
-                                <motion.div animate={{ backgroundColor: mainHex }} className="w-28 h-28 rounded-[2.5rem] shadow-2xl border-8 border-[#FCF6EF]" />
-                                <div className="space-y-2">
+                            <div className="flex flex-col md:flex-row items-start md:items-center gap-8 mb-12">
+                                <motion.div animate={{ backgroundColor: mainHex }} className="w-24 h-24 md:w-28 md:h-28 rounded-[2.5rem] shadow-2xl border-8 border-[#FCF6EF]" />
+                                <div className="space-y-3">
                                     <h3 className="text-4xl md:text-5xl font-serif text-[#795558] leading-tight italic">Estratégia Visual</h3>
-                                    <p className="text-[10px] uppercase tracking-[0.4em] text-[#795558]/40 font-black">Psicologia Instrumental</p>
+                                    <div className="flex gap-3 flex-wrap">
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#795558]/5 border border-[#795558]/10">
+                                            <Target className="w-3 h-3 text-[#795558]" />
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-[#795558]">{colorData.archetype}</span>
+                                        </div>
+                                        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#795558]/5 border border-[#795558]/10">
+                                            <Layers className="w-3 h-3 text-[#795558]" />
+                                            <span className="text-[9px] font-black uppercase tracking-widest text-[#795558]">{colorData.matchType}</span>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
 
-                            <div className="space-y-16">
+                            <div className="space-y-12">
                                 <div className="space-y-6">
                                     <div className="w-12 h-[1.5px] bg-[#795558]/10" />
                                     <p className="text-2xl md:text-3xl text-[#795558] font-serif font-light leading-snug italic text-balance">
-                                        "{wheelInfo.desc}"
+                                        "{colorData.description}"
                                     </p>
                                 </div>
 
+                                <div className="py-6 border-y border-[#795558]/5">
+                                    <h4 className="text-[9px] font-black uppercase tracking-[0.4em] text-[#795558]/30 mb-4 flex items-center gap-2"><Hexagon className="w-3 h-3" /> Setores Recomendados</h4>
+                                    <div className="flex flex-wrap gap-2">
+                                        {colorData.industries.map(ind => (
+                                            <span key={ind} className="px-3 py-1.5 bg-[#FCF6EF] rounded-lg text-xs font-bold text-[#795558]/70 border border-[#795558]/5 uppercase tracking-wide">{ind}</span>
+                                        ))}
+                                    </div>
+                                </div>
+
                                 <section className="space-y-6">
-                                    <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#795558]/30">Vibração & Impacto</h4>
-                                    <p className="text-lg text-[#795558]/60 font-light leading-relaxed">
-                                        Esta tonalidade ressoa com <span className="text-[#795558] font-serif italic">{wheelInfo.feeling}</span>. No mercado, é uma ferramenta poderosa para construir conexões emocionais de longa duração.
-                                    </p>
+                                    <h4 className="text-[10px] font-black uppercase tracking-[0.4em] text-[#795558]/30 flex items-center gap-2"><Sparkles className="w-3 h-3" /> Personalidade da Marca</h4>
+                                    <div className="flex flex-wrap gap-3">
+                                        {colorData.keywords.map((kw, i) => (
+                                            <span key={i} className="text-lg md:text-xl font-serif italic text-[#795558] opacity-80 decoration-1 underline decoration-[#795558]/20 underline-offset-4">{kw}</span>
+                                        ))}
+                                        <span className="text-lg md:text-xl font-serif italic text-[#795558]/40">{colorData.personality}</span>
+                                    </div>
                                 </section>
 
-                                <div className="grid grid-cols-1 md:grid-cols-3 gap-8 pt-12 border-t border-[#795558]/5">
+                                <div className="grid grid-cols-3 gap-4 md:gap-8 pt-8 border-t border-[#795558]/5">
                                     {[
-                                        { t: 'Harmonia Direta', c: compHex, desc: 'Contraste máximo' },
-                                        { t: 'Análoga Alpha', c: analo1, desc: 'Continuidade' },
-                                        { t: 'Análoga Beta', c: analo2, desc: 'Aprofundamento' }
+                                        { t: 'Harmonia', c: compHex, desc: 'Contraste' },
+                                        { t: 'Análoga A', c: analo1, desc: 'Continuidade' },
+                                        { t: 'Análoga B', c: analo2, desc: 'Profundidade' }
                                     ].map(h => (
-                                        <div key={h.t} className="group/item flex flex-col gap-4">
+                                        <div key={h.t} className="group/item flex flex-col gap-3 md:gap-4">
                                             <motion.div
                                                 animate={{ backgroundColor: h.c }}
-                                                className="h-28 rounded-[2rem] border-4 border-[#FCF6EF] shadow-lg group-hover/item:scale-105 transition-transform"
+                                                className="h-20 md:h-24 rounded-[1.5rem] md:rounded-[2rem] border-4 border-[#FCF6EF] shadow-lg group-hover/item:scale-105 transition-transform"
                                             />
                                             <div className="text-center">
-                                                <span className="text-[11px] font-black text-[#795558] uppercase tracking-widest block">{h.t}</span>
+                                                <span className="text-[9px] md:text-[10px] font-black text-[#795558] uppercase tracking-widest block">{h.t}</span>
                                                 <span className="text-[8px] text-[#795558]/30 uppercase tracking-tighter">{h.desc}</span>
                                             </div>
                                         </div>
@@ -329,15 +325,6 @@ export function CreativeLab() {
                                 </div>
                             </div>
                         </motion.button>
-
-                        <div className="flex items-center justify-center gap-8 text-[#795558]/30 pt-4">
-                            <div className="flex items-center gap-2">
-                                <MousePointer2 className="w-3 h-3" />
-                                <span className="text-[9px] font-bold uppercase tracking-widest">Interativo</span>
-                            </div>
-                            <div className="w-1 h-1 rounded-full bg-[#795558]/10" />
-                            <span className="text-[9px] font-bold uppercase tracking-widest">Curadoria Técnica</span>
-                        </div>
                     </div>
                 </div>
             </div>

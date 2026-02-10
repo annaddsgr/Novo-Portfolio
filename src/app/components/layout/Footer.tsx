@@ -27,7 +27,7 @@ export function Footer() {
   };
 
   return (
-    <footer className="bg-[#795558] text-[#FCF6EF] pt-24 md:pt-40 pb-12 px-6 md:px-12 relative overflow-hidden">
+    <footer className="bg-[#795558] text-[#FCF6EF] pt-16 md:pt-40 pb-12 px-6 md:px-12 relative overflow-hidden">
       {/* Editorial Decorative Layer */}
       <div className="absolute inset-0 pointer-events-none opacity-[0.03]">
         <div className="absolute top-0 right-1/4 w-[1px] h-full bg-[#FCF6EF]" />
@@ -36,27 +36,27 @@ export function Footer() {
       </div>
 
       <div className="max-w-7xl mx-auto relative z-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-16 md:gap-24 mb-32 md:mb-48">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 mb-16 md:mb-48">
 
           {/* Column 1: The Grand Statement */}
-          <div className="lg:col-span-6 space-y-12">
+          <div className="lg:col-span-6 space-y-8 md:space-y-12">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="space-y-6"
+              className="space-y-4 md:space-y-6"
             >
               <div className="flex items-center gap-3 text-[#FCF6EF]/40">
                 <Sparkles className="w-4 h-4" />
                 <span className="text-[10px] uppercase tracking-[0.4em] font-black">Visual Strategist</span>
               </div>
-              <h2 className="text-5xl md:text-8xl font-serif leading-[0.9] text-white">
+              <h2 className="text-4xl md:text-8xl font-serif leading-[0.9] text-white">
                 Vamos criar <br />
                 <span className="italic font-light opacity-60">o extraordinário.</span>
               </h2>
             </motion.div>
 
-            <div className="flex flex-col md:flex-row gap-12 md:gap-24">
+            <div className="flex flex-col md:flex-row gap-8 md:gap-24">
               <div className="space-y-4">
                 <span className="text-[10px] uppercase tracking-[0.4em] font-black text-[#FCF6EF]/30 block">Location</span>
                 <div className="flex items-center gap-3 text-lg font-serif italic">
@@ -75,11 +75,11 @@ export function Footer() {
           </div>
 
           {/* Column 2: Navigation & Socials */}
-          <div className="lg:col-span-6 grid grid-cols-2 md:grid-cols-2 gap-12">
+          <div className="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-12">
             {/* Sitemap */}
-            <div className="space-y-10">
+            <div className="space-y-8 md:space-y-10">
               <span className="text-[10px] uppercase tracking-[0.4em] font-black text-[#FCF6EF]/30">Diretório</span>
-              <ul className="space-y-6">
+              <ul className="space-y-4 md:space-y-6">
                 {navLinks.map((link) => (
                   <motion.li key={link.id} whileHover={{ x: 10 }} transition={{ type: "spring", stiffness: 300 }}>
                     <button
@@ -94,9 +94,9 @@ export function Footer() {
             </div>
 
             {/* Connection */}
-            <div className="space-y-10">
+            <div className="space-y-8 md:space-y-10">
               <span className="text-[10px] uppercase tracking-[0.4em] font-black text-[#FCF6EF]/30">Conexão Digital</span>
-              <div className="flex flex-col gap-6">
+              <div className="flex flex-col gap-4 md:gap-6">
                 {[
                   { label: 'Instagram', url: 'https://instagram.com/annadsgr', icon: Instagram },
                   { label: 'Email Me', url: 'mailto:contato@anna.com', icon: Mail },
@@ -120,24 +120,24 @@ export function Footer() {
         </div>
 
         {/* Final Typographic Brand */}
-        <div className="border-t border-[#FCF6EF]/10 pt-16 mt-16 md:mt-32">
-          <div className="flex flex-col md:flex-row items-end justify-between gap-12">
+        <div className="border-t border-[#FCF6EF]/10 pt-12 md:pt-16 mt-12 md:mt-32">
+          <div className="flex flex-col md:flex-row items-start md:items-end justify-between gap-12">
             <div className="space-y-6 max-w-sm">
               <img
                 src={getImagePath('assets/logo.png')}
                 alt="Anna Designer"
-                className="h-12 md:h-20 brightness-200 grayscale contrast-200"
+                className="h-10 md:h-20 brightness-200 grayscale contrast-200"
               />
               <p className="text-xs md:text-sm text-[#FCF6EF]/40 font-light leading-relaxed italic">
                 Identidade visual, estratégia e design editorial com foco no extraordinário. Criado com alma no Brasil.
               </p>
             </div>
 
-            <div className="flex flex-col items-end gap-6">
+            <div className="flex flex-col items-end gap-6 self-end">
               <Magnetic>
                 <button
                   onClick={scrollToTop}
-                  className="group w-24 h-24 rounded-full border border-[#FCF6EF]/20 flex flex-col items-center justify-center gap-2 hover:bg-white hover:text-[#795558] transition-all"
+                  className="group w-20 h-20 md:w-24 md:h-24 rounded-full border border-[#FCF6EF]/20 flex flex-col items-center justify-center gap-2 hover:bg-white hover:text-[#795558] transition-all"
                 >
                   <ArrowUp className="w-5 h-5 group-hover:-translate-y-1 transition-transform" />
                   <span className="text-[8px] font-black uppercase tracking-[0.2em]">Topo</span>
@@ -148,12 +148,12 @@ export function Footer() {
         </div>
 
         {/* Legal Bar */}
-        <div className="mt-24 pt-8 border-t border-[#FCF6EF]/5 flex flex-col md:flex-row justify-between items-center gap-6">
-          <div className="text-[10px] font-bold uppercase tracking-[0.4em] text-[#FCF6EF]/20">
+        <div className="mt-16 md:mt-24 pt-8 border-t border-[#FCF6EF]/5 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+          <div className="text-[9px] md:text-[10px] font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-[#FCF6EF]/20">
             © {currentYear} Anna Designer — Todos os Diretos Reservados
           </div>
 
-          <div className="flex items-center gap-8 text-[10px] font-bold uppercase tracking-[0.2em] text-[#FCF6EF]/20">
+          <div className="flex items-center gap-6 md:gap-8 text-[9px] md:text-[10px] font-bold uppercase tracking-[0.2em] text-[#FCF6EF]/20">
             <span className="hover:text-[#FCF6EF]/80 cursor-default">Privacy</span>
             <span className="hover:text-[#FCF6EF]/80 cursor-default">Terms</span>
             <span className="italic">Design by Anna</span>

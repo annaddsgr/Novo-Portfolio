@@ -7,6 +7,13 @@ export function Magnetic({ children }: { children: ReactNode }) {
 
     const handleMouseMove = (e: React.MouseEvent) => {
         if (!ref.current) return;
+        
+        // Disable on touch devices or small screens to prevent "dragging" feeling
+        if (typeof window !== 'undefined' && (window.innerWidth < 1024 || window.matchMedia('(hover: none)').matches)) {
+            setPosition({ x: 0, y: 0 });
+            return;
+        }
+
         const { clientX, clientY } = e;
         const { height, width, left, top } = ref.current.getBoundingClientRect();
         const middleX = clientX - (left + width / 2);

@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Sparkles, ArrowUpRight } from 'lucide-react';
-import { Project } from '../sections/ProjectsSection';
+import { Project } from '@/app/data/projects';
 import { ImageWithFallback } from './figma/ImageWithFallback';
 import { getImagePath } from '@/app/utils/imagePath';
 
@@ -23,15 +23,25 @@ export function ProjectFeed({ isOpen, onClose, projects, onSelectProject }: Proj
           className="fixed inset-0 bg-[#FCF6EF] z-[10000] overflow-y-auto custom-scrollbar"
         >
           {/* Close Button - Abstract Floating */}
-          <motion.button
-            initial={{ opacity: 0, rotate: -45 }}
-            animate={{ opacity: 1, rotate: 0 }}
+          <motion.div
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.8 }}
+            className="fixed top-6 right-6 z-[10001] flex items-center gap-3"
             onClick={onClose}
-            className="fixed top-8 right-8 z-[10001] w-14 h-14 bg-[#795558] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all group"
           >
-            <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
-          </motion.button>
+             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558] bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm hidden md:block">
+                Fechar Galeria
+             </span>
+             <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558] bg-white/80 backdrop-blur px-3 py-1.5 rounded-full shadow-sm md:hidden">
+                Voltar
+             </span>
+            <button
+                className="w-12 h-12 md:w-14 md:h-14 bg-[#795558] text-white rounded-full flex items-center justify-center shadow-2xl hover:scale-110 active:scale-95 transition-all group"
+            >
+                <X className="w-5 h-5 group-hover:rotate-90 transition-transform duration-500" />
+            </button>
+          </motion.div>
 
           {/* Immersive Scroll Watermark */}
           <div className="fixed inset-0 pointer-events-none overflow-hidden select-none opacity-[0.03]">

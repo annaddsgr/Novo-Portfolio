@@ -6,12 +6,15 @@ import { NotFound } from './components/layout/NotFound';
 import { PageLoader } from './components/layout/PageLoader';
 import { Home } from './Home';
 
+import { SmoothScroll } from './components/layout/SmoothScroll';
+
 // Lazy loading for heavy features/pages
 const BriefingPage = lazy(() => import('./components/features/BriefingPage').then(module => ({ default: module.BriefingPage })));
 
 export default function App() {
   return (
     <HashRouter>
+      <SmoothScroll />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/briefing" element={

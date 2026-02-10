@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { X, Calendar, ArrowRight, CheckCircle, ChevronLeft, ChevronRight, Maximize2 } from 'lucide-react';
 import { ImageWithFallback } from './figma/ImageWithFallback';
-import { Project } from '../sections/ProjectsSection';
+import { Project } from '@/app/data/projects';
 import { getImagePath } from '@/app/utils/imagePath';
 
 interface ProjectModalProps {
@@ -35,7 +35,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        className="fixed inset-0 bg-[#795558]/20 backdrop-blur-xl z-50 flex items-center justify-center p-0 md:p-6"
+        className="fixed inset-0 bg-[#795558]/20 backdrop-blur-xl z-[10050] flex items-center justify-center p-0 md:p-6"
         onClick={onClose}
       >
         <motion.div
@@ -46,13 +46,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           className="bg-[#FCF6EF] md:rounded-[2.5rem] w-full max-w-7xl h-full md:h-[90vh] shadow-[0_50px_100px_-20px_rgba(121,85,88,0.3)] relative overflow-hidden flex flex-col md:flex-row"
           onClick={(e) => e.stopPropagation()}
         >
-          {/* Close Button - Abstract Floating */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 md:top-6 md:right-6 z-[60] bg-white/80 backdrop-blur-md hover:bg-[#795558] text-[#795558] hover:text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-xl border border-white/50 group"
-          >
-            <X className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-90 transition-transform duration-500" />
-          </button>
+
 
           {/* LEFT: Cinematic Gallery (Sticky Scroll) */}
           <div className="md:w-[55%] h-[40vh] md:h-full bg-white relative overflow-y-auto no-scrollbar scroll-smooth">
@@ -196,6 +190,22 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                 </div>
               </div>
             </div>
+          </div>
+
+          {/* Close Button - Moved for Z-Index Safety */}
+          <div
+            className="absolute top-6 right-6 z-[60] flex items-center gap-3 pointer-events-auto"
+            onClick={onClose}
+          >
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#795558] bg-white shadow-sm md:hidden pointer-events-none px-3 py-1.5 rounded-full">
+                Voltar
+            </span>
+            <button
+                aria-label="Fechar"
+                className="bg-white hover:bg-[#795558] text-[#795558] hover:text-white w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 shadow-2xl border border-[#795558]/10 group"
+            >
+                <X className="w-5 h-5 md:w-6 md:h-6 group-hover:rotate-90 transition-transform duration-500" />
+            </button>
           </div>
         </motion.div>
       </motion.div>
