@@ -1,0 +1,5 @@
+<svg width="256" height="256" viewBox="0 0 256 256" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <circle cx="128" cy="128" r="128" fill="#795558"/>
+  <text x="128" y="180" font-family="serif" font-size="160" fill="#FFDAF0" text-anchor="middle" font-style="italic">A</text>
+  <path d="M128 128Q110 110 100 130Q110 100 130 110" stroke="#FFDAF0" stroke-width="4" fill="none" opacity="0.8"/>
+</svg>

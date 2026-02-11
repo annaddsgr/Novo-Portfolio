@@ -9,10 +9,11 @@ export function HeroMobile() {
 
   return (
     <section className="relative min-h-[90vh] flex flex-col items-center justify-center overflow-hidden bg-[#FCF6EF] py-12 px-6">
-      {/* Reduced Background Atmosphere for Mobile Performance */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute -top-[5%] -right-[5%] w-[90%] h-[50%] bg-[#795558]/5 rounded-full blur-[80px] mix-blend-multiply" />
-        <div className="absolute bottom-[-5%] left-[-10%] w-[80%] h-[40%] bg-[#FFDAF0]/20 rounded-full blur-[60px]" />
+      {/* Reduced Background Atmosphere for Mobile Performance - Optimized */}
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        {/* Using CSS Radial Gradients instead of large blurs for better mobile performance */}
+        <div className="absolute -top-[10%] -right-[10%] w-[70%] h-[40%] rounded-full bg-[#795558]/5 blur-3xl opacity-60 mix-blend-multiply" />
+        <div className="absolute bottom-[-10%] left-[-10%] w-[60%] h-[30%] rounded-full bg-[#FFDAF0]/20 blur-2xl opacity-50" />
       </div>
 
       <div className="w-full max-w-md mx-auto relative z-10 text-center">
@@ -69,8 +70,8 @@ export function HeroMobile() {
         </motion.div>
       </div>
 
-       {/* Simple Scroll Indicator */}
-       <motion.div
+      {/* Simple Scroll Indicator */}
+      <motion.div
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
         className="absolute bottom-8 left-1/2 -translate-x-1/2"

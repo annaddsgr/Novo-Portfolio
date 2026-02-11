@@ -53,6 +53,7 @@ export function Home() {
 
 
       {/* Global Ambient Glow - Subtle Interactive Layer */}
+      {/* Global Ambient Glow - Subtle Interactive Layer - Optimized for Mobile */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
         <motion.div
           animate={{
@@ -60,7 +61,7 @@ export function Home() {
             y: [0, 30, 0],
           }}
           transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#795558]/5 rounded-full blur-[150px]"
+          className="hidden md:block absolute -top-1/4 -right-1/4 w-1/2 h-1/2 bg-[#795558]/5 rounded-full blur-[150px]"
         />
         <motion.div
           animate={{
@@ -68,8 +69,10 @@ export function Home() {
             y: [0, 60, 0],
           }}
           transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-[#FFDAF0]/10 rounded-full blur-[150px]"
+          className="hidden md:block absolute -bottom-1/4 -left-1/4 w-1/2 h-1/2 bg-[#FFDAF0]/10 rounded-full blur-[150px]"
         />
+        {/* Mobile Static Fallback - Much lighter on GPU */}
+        <div className="md:hidden absolute inset-0 bg-gradient-to-br from-[#795558]/5 via-transparent to-[#FFDAF0]/5 opacity-50" />
       </div>
 
       {/* Scroll Progress Bar */}

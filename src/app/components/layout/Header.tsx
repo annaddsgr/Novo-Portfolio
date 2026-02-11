@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Menu, X } from 'lucide-react';
 import { useLanguage } from '../../context/LanguageContext';
 import { getImagePath } from '@/app/utils/imagePath';
 import { Magnetic } from './Magnetic';
@@ -109,23 +110,19 @@ export function Header() {
           {/* Mobile Menu Toggle & Actions */}
           <div className="flex items-center gap-4 md:hidden pr-2">
             {/* Language Toggle Mobile */}
-             <button
-                onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
-                className="w-8 h-8 flex items-center justify-center rounded-full border border-[#795558]/10 text-[#795558] text-[9px] font-black bg-white/50 backdrop-blur-sm shadow-sm"
+            <button
+              onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+              className="w-8 h-8 flex items-center justify-center rounded-full border border-[#795558]/10 text-[#795558] text-[9px] font-black bg-white/50 backdrop-blur-sm shadow-sm"
             >
-                {language.toUpperCase()}
+              {language.toUpperCase()}
             </button>
 
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
-              className="relative z-[6000] p-2.5 text-[#795558] bg-white/50 backdrop-blur-sm rounded-full border border-[#795558]/10 shadow-sm"
-              aria-label="Toggle Menu"
+              className="relative z-[6000] p-2.5 text-[#795558] bg-white/50 backdrop-blur-sm rounded-full border border-[#795558]/10 shadow-sm transition-transform active:scale-95"
+              aria-label={isMenuOpen ? "Fechar Menu" : "Abrir Menu"}
             >
-              <div className="flex flex-col gap-1.5 items-end w-6">
-                 <span className={`block h-[2px] bg-current transition-all duration-300 origin-center ${isMenuOpen ? 'w-6 rotate-45 translate-y-[7px]' : 'w-6'}`} />
-                 <span className={`block h-[2px] bg-current transition-all duration-300 ${isMenuOpen ? 'opacity-0' : 'w-4'}`} />
-                 <span className={`block h-[2px] bg-current transition-all duration-300 origin-center ${isMenuOpen ? 'w-6 -rotate-45 -translate-y-[8px]' : 'w-6'}`} />
-              </div>
+              {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
             </button>
           </div>
         </div>
@@ -186,10 +183,10 @@ export function Header() {
                 <a href="mailto:contato@anna.com" className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40">Email</a>
                 <div className="w-[1px] h-3 bg-[#795558]/10" />
                 <button
-                   onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
-                   className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40 hover:text-[#795558]"
+                  onClick={() => setLanguage(language === 'pt' ? 'en' : 'pt')}
+                  className="text-[10px] font-black uppercase tracking-widest text-[#795558]/40 hover:text-[#795558]"
                 >
-                   {language.toUpperCase()}
+                  {language.toUpperCase()}
                 </button>
               </motion.div>
             </div>
