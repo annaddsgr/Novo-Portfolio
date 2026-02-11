@@ -50,8 +50,7 @@ export function Home() {
 
   return (
     <div className="min-h-screen bg-[#FCF6EF] antialiased md:cursor-none selection:bg-[#795558] selection:text-[#FCF6EF]">
-      {/* Grain Overlay - Subtle Tactile Texture */}
-      <div className="fixed inset-0 pointer-events-none z-[9999] opacity-[0.03] mix-blend-multiply bg-[url('https://www.transparenttextures.com/patterns/natural-paper.png')]" />
+
 
       {/* Global Ambient Glow - Subtle Interactive Layer */}
       <div className="fixed inset-0 pointer-events-none z-[-1] overflow-hidden">
