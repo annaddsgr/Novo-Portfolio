@@ -1,12 +1,12 @@
 {
-  "name": "novo-portfolio",
+  "name": "portfolio-annadsg",
   "private": true,
   "version": "0.1.0",
-  "homepage": "https://portfolio-anna-nine.vercel.app/",
+  "homepage": "https://annaddsgr.github.io/Portfolio/",
   "type": "module",
   "scripts": {
     "build": "vite build",
-    "build:gh": "cross-env BASE_PATH=/Novo-Portfolio/ vite build",
+    "build:gh": "cross-env BASE_PATH=/Portfolio/vite build",
     "dev": "vite",
     "predeploy": "npm run build:gh",
     "deploy": "gh-pages -d dist"
