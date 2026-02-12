@@ -137,6 +137,19 @@ export function Header() {
             exit={{ opacity: 0 }}
             className="fixed inset-0 bg-[#FCF6EF] z-[5500] md:hidden"
           >
+            {/* Botão de Fechar */}
+            <motion.button
+              onClick={() => setIsMenuOpen(false)}
+              initial={{ opacity: 0, scale: 0.5 }}
+              animate={{ opacity: 1, scale: 1 }}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className="absolute top-8 right-8 w-12 h-12 flex items-center justify-center rounded-full bg-[#795558]/5 text-[#795558] active:bg-[#795558]/10 transition-colors z-[5600]"
+              aria-label="Fechar Menu"
+            >
+              <X size={28} />
+            </motion.button>
+
             {/* Artistic Background Elements */}
             <div className="absolute inset-0 opacity-[0.03] pointer-events-none">
               <div className="absolute top-20 left-[-10%] text-[40rem] font-serif italic text-[#795558] leading-none">A</div>
