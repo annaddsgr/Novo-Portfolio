@@ -64,7 +64,7 @@ export function CreativeProcess() {
             transition={{ duration: 1 }}
             className="text-4xl md:text-6xl font-serif text-[#795558] dark:text-[#FCF6EF] mb-6 font-light"
           >
-            Como posso te <span className="italic">ajudar</span>?
+            O processo de <span className="italic">criação</span>
           </motion.h2>
           
           <motion.p
